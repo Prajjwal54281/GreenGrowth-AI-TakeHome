@@ -39,16 +39,16 @@ export function AITrustPanel({
     .filter(Boolean) as { region: NonNullable<ReturnType<typeof regionById>>['region']; doc: any }[]
 
   return (
-    <div className="rounded-xl border border-[--color-aff-ai-border] bg-[--color-aff-ai-bg] p-4">
+    <div className="rounded-xl border border-aff-ai-border bg-aff-ai-bg p-4">
       {/* header */}
       <div className="mb-3 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[--color-aff-ai] text-white">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-aff-ai text-white">
             <Icon path={ICONS.review} size={15} />
           </span>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="text-sm font-bold text-[--color-aff-ai]">AI assist</span>
+              <span className="text-sm font-bold text-aff-ai">AI assist</span>
               <ChallengeTag ids={['10']} />
             </div>
             <div className="text-2xs text-ink-500">How this value was produced</div>
@@ -107,10 +107,10 @@ export function AITrustPanel({
       )}
 
       {/* suggested action + correction flow */}
-      <div className="mt-3 border-t border-[--color-aff-ai-border] pt-3">
+      <div className="mt-3 border-t border-aff-ai-border pt-3">
         {resolved ? (
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-1.5 text-sm font-semibold text-[--color-aff-verified]">
+            <div className="flex items-center gap-1.5 text-sm font-semibold text-aff-verified">
               <Icon path={ICONS.check} size={16} /> Verified — value is now {money(field.value)}
             </div>
             <AffordanceBadge state="verified" />

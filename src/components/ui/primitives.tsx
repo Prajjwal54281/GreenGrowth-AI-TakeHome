@@ -47,11 +47,11 @@ type Tone = 'brand' | 'ink' | 'success' | 'warning' | 'danger' | 'info' | 'ai'
 const TONE: Record<Tone, string> = {
   brand: 'bg-brand-50 text-brand-700 border-brand-200',
   ink: 'bg-ink-100 text-ink-600 border-ink-200',
-  success: 'bg-[--color-success-bg] text-[--color-success] border-green-200',
-  warning: 'bg-[--color-warning-bg] text-[--color-warning] border-amber-200',
-  danger: 'bg-[--color-danger-bg] text-[--color-danger] border-red-200',
-  info: 'bg-[--color-info-bg] text-[--color-info] border-blue-200',
-  ai: 'bg-[--color-aff-ai-bg] text-[--color-aff-ai] border-[--color-aff-ai-border]',
+  success: 'bg-success-bg text-success border-green-200',
+  warning: 'bg-warning-bg text-warning border-amber-200',
+  danger: 'bg-danger-bg text-danger border-red-200',
+  info: 'bg-info-bg text-info border-blue-200',
+  ai: 'bg-aff-ai-bg text-aff-ai border-aff-ai-border',
 }
 
 export function Badge({
@@ -96,7 +96,7 @@ export function Button({
     primary: 'bg-brand-700 text-white hover:bg-brand-800 shadow-card',
     secondary: 'bg-white text-ink-700 border border-ink-300 hover:bg-ink-50',
     ghost: 'text-ink-600 hover:bg-ink-100',
-    danger: 'bg-[--color-danger] text-white hover:brightness-95',
+    danger: 'bg-danger text-white hover:brightness-95',
   }
   return (
     <button
