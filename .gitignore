@@ -7,6 +7,10 @@ node_modules
 dist
 dist-ssr
 *.local
+*.tsbuildinfo
+
+# local claude settings (machine-specific permissions)
+.claude/settings.local.json
 
 # logs
 logs
