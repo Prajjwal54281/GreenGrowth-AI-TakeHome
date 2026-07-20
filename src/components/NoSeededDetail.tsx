@@ -8,7 +8,7 @@ import { Icon, ICONS } from './ui/Icon'
    Only ONE return (Sarah Chen, RET-1001) is seeded with full field-level detail:
    documents, traceability regions, AI output, threads, and questionnaire items.
    The other 121 returns exist so the dashboard's prioritization logic is tested
-   against realistic volume — they intentionally have no field-level detail.
+   against realistic volume, so they intentionally have no field-level detail.
    Rather than showing a blank screen, we say so and point at the real one.
    ========================================================================== */
 
@@ -34,7 +34,7 @@ export function NoSeededDetail({
           one of 121 returns generated so the dashboard’s prioritization logic gets
           tested against realistic volume. To keep the prototype honest I seeded{' '}
           <span className="font-medium text-ink-600">one</span> return with full
-          field-level detail — documents, traceability regions, AI output, and threads.
+          field-level detail: documents, traceability regions, AI output, and threads.
         </p>
         <div className="mt-4 flex items-center justify-center gap-2">
           <Link to={`/returns/${HERO_RETURN_ID}/review`}>

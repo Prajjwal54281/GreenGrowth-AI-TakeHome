@@ -2,11 +2,11 @@ import { confidenceBand, CONFIDENCE_META } from '../../design/affordances'
 import { Tooltip } from '../ui/Tooltip'
 
 /* ============================================================================
-   ConfidenceMeter — Challenge 10
+   ConfidenceMeter: Challenge 10
    A *designed* confidence indicator, not a bare percentage. Three signal bars
    (like cell reception) plus a plain-language band. The raw score is available
    on hover for the curious, but the primary read is "high / medium / low" +
-   color — appropriate transparency, not a technical dump.
+   color. Appropriate transparency, not a technical dump.
    ========================================================================== */
 
 export function ConfidenceMeter({

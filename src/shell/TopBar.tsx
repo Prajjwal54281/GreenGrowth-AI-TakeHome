@@ -84,7 +84,7 @@ export function TopBar() {
 
         <div className="mx-1 h-6 w-px bg-ink-200" />
 
-        {/* Staff / personal context switch — 05 edge case */}
+        {/* Staff / personal context switch, 05 edge case */}
         {isStaffPersonal && (
           <div className="flex items-center rounded-lg border border-ink-200 p-0.5 text-xs font-semibold">
             <button

@@ -12,7 +12,7 @@ import { Card } from './ui/primitives'
 import { ChallengeTag } from './ChallengeTag'
 
 /* ============================================================================
-   RELATED OBJECTS — Challenge 04
+   RELATED OBJECTS: Challenge 04
    A panel present on every entity that shows what THIS thing connects to, so a
    user can move between a field, its document, its thread, a task, and the
    questionnaire without ever leaving the return's context. Every link is a real
@@ -137,7 +137,7 @@ export function RelatedObjects({
         {warnings.length > 0 && (
           <div className="rounded-lg bg-amber-50 px-2.5 py-2 text-2xs text-amber-700">
             <Icon path={ICONS.warning} size={12} className="mr-1 inline" />
-            {warnings.length} warnings on this return — see All items.
+            {warnings.length} warnings on this return. See All items.
           </div>
         )}
       </div>

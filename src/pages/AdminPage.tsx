@@ -9,7 +9,7 @@ import { Icon, ICONS } from '../components/ui/Icon'
 import type { Role } from '../data/types'
 
 /* ============================================================================
-   FIRM ADMINISTRATION — Challenge 05
+   FIRM ADMINISTRATION: Challenge 05
    The admin experience, and the place where permissions are COMMUNICATED
    rather than merely enforced. The matrix below is the same role model the
    shell uses to build navigation, so what an admin reads here matches what
@@ -31,7 +31,7 @@ const ROLE_NOTE: Record<Role, string> = {
   reviewer: 'Signs off on returns in review; can approve changed values.',
   manager: 'Everything a reviewer can do, plus the team workload lens.',
   admin: 'Firm-wide visibility, team roster, and role administration.',
-  seasonal: 'A preparer with a narrower scope — temporary, capacity-only access.',
+  seasonal: 'A preparer with a narrower scope: temporary, capacity-only access.',
 }
 
 const CAPS = [
@@ -99,7 +99,7 @@ export function AdminPage() {
         <Card className="overflow-hidden">
           <CardHeader
             title="Roles & permissions"
-            subtitle="One product, six roles — this matrix is what the shell actually enforces"
+            subtitle="One product, six roles. This matrix is what the shell actually enforces"
           />
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
@@ -123,7 +123,7 @@ export function AdminPage() {
                         {allowed ? (
                           <Icon path={ICONS.check} size={15} className="inline text-aff-verified" />
                         ) : (
-                          <span className="text-ink-300">—</span>
+                          <span className="text-ink-300">·</span>
                         )}
                       </td>
                     ))}
@@ -133,7 +133,7 @@ export function AdminPage() {
             </table>
           </div>
           <div className="border-t border-ink-100 px-4 py-2.5 text-2xs text-ink-400">
-            Presentation-layer only — there is no real auth behind this prototype. A production
+            Presentation-layer only. There is no real auth behind this prototype. A production
             build would enforce the same matrix server-side.
           </div>
         </Card>

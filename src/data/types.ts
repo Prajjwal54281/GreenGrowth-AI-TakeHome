@@ -110,7 +110,7 @@ export interface DocRegion {
   page: number
   /** percentages 0..100 */
   bbox: { x: number; y: number; w: number; h: number }
-  /** the box label as printed on the form, e.g. "Box 1 — Wages" */
+  /** the box label as printed on the form, e.g. "Box 1, Wages" */
   label: string
   /** the raw value read from this region */
   rawValue: string
@@ -122,7 +122,7 @@ export interface TaxDocument {
   id: string
   returnId: string
   type: DocType
-  /** e.g. "W-2 — Initech LLC" */
+  /** e.g. "W-2, Initech LLC" */
   title: string
   issuer: string
   pageCount: number

@@ -1,5 +1,5 @@
 /* ============================================================================
-   AFFORDANCE SYSTEM — Challenge 08 "Clickable vs. Editable"
+   AFFORDANCE SYSTEM: Challenge 08 "Clickable vs. Editable"
    ----------------------------------------------------------------------------
    One vocabulary of value-states, used on EVERY screen that shows a value.
    Each state answers, at a glance: can I trust this? can I change it? who can?
@@ -36,7 +36,7 @@ export const AFFORDANCES: Record<AffordanceState, AffordanceMeta> = {
   'ai-unverified': {
     state: 'ai-unverified',
     label: 'AI · Unverified',
-    why: 'Extracted or suggested by the AI. No person has confirmed it yet — review before you rely on it.',
+    why: 'Extracted or suggested by the AI. No person has confirmed it yet. Review before you rely on it.',
     action: 'Review & verify',
     icon: 'M12 2 3 7v6c0 5 3.8 8.3 9 9 5.2-.7 9-4 9-9V7l-9-5Zm0 6a2.2 2.2 0 0 1 1 4.1V15h-2v-2.9A2.2 2.2 0 0 1 12 8Z',
     text: 'text-aff-ai',
@@ -130,7 +130,7 @@ export const CONFIDENCE_META: Record<
     bg: 'bg-conf-medium',
     ring: 'ring-conf-medium',
     bars: 2,
-    why: 'The AI is fairly sure but something was ambiguous — worth confirming against the document.',
+    why: 'The AI is fairly sure but something was ambiguous, so it is worth confirming against the document.',
   },
   low: {
     label: 'Low confidence',

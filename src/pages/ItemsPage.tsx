@@ -130,7 +130,7 @@ export function ItemsPage() {
 
       <PageHeader
         title="Everything on this return"
-        subtitle="Hundreds of documents, fields, questions, warnings and messages — searchable, filterable, groupable."
+        subtitle="Hundreds of documents, fields, questions, warnings and messages, all searchable, filterable and groupable."
         challenges={['09']}
       />
 
@@ -242,7 +242,7 @@ export function ItemsPage() {
                 )
               })}
               {g.items.length > 60 && (
-                <div className="px-4 py-2 text-center text-2xs text-ink-400">+ {g.items.length - 60} more — narrow with search or filters</div>
+                <div className="px-4 py-2 text-center text-2xs text-ink-400">+ {g.items.length - 60} more. Narrow with search or filters</div>
               )}
             </div>
           </Card>

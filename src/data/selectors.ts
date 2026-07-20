@@ -1,4 +1,4 @@
-/* Read helpers over the seeded world. Pure functions — pass the live world in. */
+/* Read helpers over the seeded world. Pure functions, pass the live world in. */
 
 import type { SeedWorld, TaxReturn, Persona } from './types'
 

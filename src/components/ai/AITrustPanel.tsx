@@ -10,7 +10,7 @@ import { ChallengeTag } from '../ChallengeTag'
 import { money } from '../../lib/format'
 
 /* ============================================================================
-   AI TRUST PANEL — Challenge 10
+   AI TRUST PANEL: Challenge 10
    Everywhere the AI produced a value, this panel explains it consistently:
    what it did · why · the evidence (linked) · a designed confidence indicator ·
    the suggested action · and an inline Accept / Edit / Reject flow that changes
@@ -77,7 +77,7 @@ export function AITrustPanel({
                 className="inline-flex items-center gap-1 rounded-md border border-brand-300 bg-white px-2 py-1 text-2xs font-medium text-brand-700 hover:bg-brand-50"
               >
                 <Icon path={ICONS.link} size={11} />
-                {doc.title.split(' — ')[0]} · {region.label.split(' — ')[0]}
+                {doc.title.split(' · ')[0]} · {region.label.split(' · ')[0]}
               </button>
             ))}
           </dd>
@@ -91,7 +91,7 @@ export function AITrustPanel({
             <Icon path={ICONS.warning} size={13} /> Conflicting sources
           </div>
           <p className="mt-0.5">
-            Another source disagrees: <span className="font-semibold">{money(ai.conflict.otherValue)}</span> — {ai.conflict.otherSourceLabel}.
+            Another source disagrees: <span className="font-semibold">{money(ai.conflict.otherValue)}</span>, {ai.conflict.otherSourceLabel}.
           </p>
         </div>
       )}
@@ -101,7 +101,7 @@ export function AITrustPanel({
             <Icon path={ICONS.warning} size={13} /> This suggestion looks wrong
           </div>
           <p className="mt-0.5">
-            The AI’s value ({money(ai.suggestedValue)}) doesn’t reconcile with its own evidence. Don’t accept as-is — edit or reject.
+            The AI’s value ({money(ai.suggestedValue)}) doesn’t reconcile with its own evidence. Don’t accept as-is. Edit or reject.
           </p>
         </div>
       )}
@@ -111,7 +111,7 @@ export function AITrustPanel({
         {resolved ? (
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1.5 text-sm font-semibold text-aff-verified">
-              <Icon path={ICONS.check} size={16} /> Verified — value is now {money(field.value)}
+              <Icon path={ICONS.check} size={16} /> Verified. Value is now {money(field.value)}
             </div>
             <AffordanceBadge state="verified" />
           </div>
@@ -180,7 +180,7 @@ export function AITrustPanel({
         )}
         {ai.isWrong && !resolved && !editing && !handedBack && (
           <p className="mt-1.5 text-right text-2xs text-ink-400">
-            Accept is disabled here — the value needs a human correction.
+            Accept is disabled here, because the value needs a human correction.
           </p>
         )}
       </div>

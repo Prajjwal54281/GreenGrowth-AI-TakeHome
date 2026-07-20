@@ -3,7 +3,7 @@ import { Icon } from '../ui/Icon'
 import { Tooltip } from '../ui/Tooltip'
 
 /* ============================================================================
-   AffordanceValue — Challenge 08
+   AffordanceValue: Challenge 08
    The single component that renders "a value in a state". Same treatment
    everywhere: color, dot, icon, and a hover tooltip explaining WHY it's in that
    state and what you can do about it. If the state is `editable` and an onEdit

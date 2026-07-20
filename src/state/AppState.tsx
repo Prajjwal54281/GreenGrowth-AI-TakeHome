@@ -3,7 +3,7 @@
    One in-memory, reactive store for the whole prototype. Holds the current
    persona (Challenge 05) and a MUTABLE copy of the seeded world so that
    corrections made on the review screen (Challenge 10) visibly ripple out to
-   the dashboard and status views. No backend — this is the "fake" layer, made
+   the dashboard and status views. No backend; this is the "fake" layer, made
    honest: mutations are real state changes, reads simulate latency elsewhere.
    ========================================================================== */
 

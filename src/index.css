@@ -12,7 +12,7 @@
    ========================================================================== */
 
 @theme {
-  /* ---- Brand: "GreenGrowth" — a calm, professional teal-green ------------- */
+  /* ---- Brand: "GreenGrowth", a calm, professional teal-green ------------- */
   --color-brand-50: #f0fdfa;
   --color-brand-100: #ccfbf1;
   --color-brand-200: #99f6e4;
@@ -46,24 +46,24 @@
   --color-info: #2563eb;
   --color-info-bg: #eff6ff;
 
-  /* ---- Affordance states (Challenge 08) — first-class design tokens ------- */
-  /* ai-unverified — AI produced this, a human has NOT confirmed it yet */
+  /* ---- Affordance states (Challenge 08), first-class design tokens ------- */
+  /* ai-unverified, AI produced this, a human has NOT confirmed it yet */
   --color-aff-ai: #7c3aed;
   --color-aff-ai-bg: #f5f3ff;
   --color-aff-ai-border: #ddd6fe;
-  /* verified — a human has confirmed this value */
+  /* verified, a human has confirmed this value */
   --color-aff-verified: #16a34a;
   --color-aff-verified-bg: #f0fdf4;
   --color-aff-verified-border: #bbf7d0;
-  /* editable — the current user may change this */
+  /* editable, the current user may change this */
   --color-aff-editable: #2563eb;
   --color-aff-editable-bg: #eff6ff;
   --color-aff-editable-border: #bfdbfe;
-  /* requires-approval — changed, waiting on a reviewer sign-off */
+  /* requires-approval, changed, waiting on a reviewer sign-off */
   --color-aff-approval: #d97706;
   --color-aff-approval-bg: #fffbeb;
   --color-aff-approval-border: #fde68a;
-  /* locked — read-only, cannot be changed (filed, or system-derived) */
+  /* locked, read-only, cannot be changed (filed, or system-derived) */
   --color-aff-locked: #64748b;
   --color-aff-locked-bg: #f1f5f9;
   --color-aff-locked-border: #e2e8f0;
@@ -78,7 +78,7 @@
     Roboto, Helvetica, Arial, sans-serif;
   --font-mono: ui-monospace, 'SF Mono', 'Menlo', 'Monaco', monospace;
 
-  --text-2xs: 0.6875rem;   /* 11px — micro labels, legend chips */
+  --text-2xs: 0.6875rem;   /* 11px, micro labels, legend chips */
   --text-2xs--line-height: 1rem;
 
   /* ---- Radius ------------------------------------------------------------ */

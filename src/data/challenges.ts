@@ -1,4 +1,4 @@
-/* Registry of the ten challenges — drives the Demo Guide overlay and the small
+/* Registry of the ten challenges, drives the Demo Guide overlay and the small
    "Challenge NN" tags shown on the screens that demonstrate each one. */
 
 import { HERO_RETURN_ID } from './hero'
@@ -62,7 +62,7 @@ export const CHALLENGES: ChallengeDef[] = [
     depth: 'medium',
     route: '/admin',
     demoNote:
-      'Six roles, one shell. This page shows the role/permission matrix the shell actually enforces. Use the top-bar persona switcher: Sarah (individual), Daniel (business owner), Marcus (preparer), Diane (manager), Elena (admin), and Priya — firm staff who ALSO has a personal return and can flip between Staff mode and My taxes.',
+      'Six roles, one shell. This page shows the role/permission matrix the shell actually enforces. Use the top-bar persona switcher: Sarah (individual), Daniel (business owner), Marcus (preparer), Diane (manager), Elena (admin), and Priya, firm staff who ALSO has a personal return and can flip between Staff mode and My taxes.',
   },
   {
     id: '06',
@@ -80,7 +80,7 @@ export const CHALLENGES: ChallengeDef[] = [
     depth: 'flagship',
     route: '/dashboard',
     demoNote:
-      '523 returns in the book; Marcus alone owns ~200. The "Do this next" queue is ranked by real logic — hover a row to see WHY it ranks. Switch Manager lens (team workload) vs Preparer lens (my queue).',
+      '523 returns in the book; Marcus alone owns ~200. The "Do this next" queue is ranked by real logic. Hover a row to see WHY it ranks. Switch Manager lens (team workload) vs Preparer lens (my queue).',
   },
   {
     id: '08',
@@ -98,7 +98,7 @@ export const CHALLENGES: ChallengeDef[] = [
     depth: 'medium',
     route: `/returns/${R}/items`,
     demoNote:
-      'Search, filter by kind/section/state, group, and drill from summary to source detail — over 200 seeded items on this one return.',
+      'Search, filter by kind/section/state, group, and drill from summary to source detail, over 200 seeded items on this one return.',
   },
   {
     id: '10',
@@ -107,7 +107,7 @@ export const CHALLENGES: ChallengeDef[] = [
     depth: 'flagship',
     route: `/returns/${R}/review/FLD-CAPGAIN`,
     demoNote:
-      'Open the Capital gain field — the AI value here is deliberately WRONG. See the trust panel (what/why/evidence/confidence) and use Accept · Edit · Reject. Watch the dashboard flag clear.',
+      'Open the Capital gain field. The AI value here is deliberately WRONG. See the trust panel (what/why/evidence/confidence) and use Accept · Edit · Reject. Watch the dashboard flag clear.',
   },
 ]
 

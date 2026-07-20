@@ -119,7 +119,7 @@ export function ReviewPage() {
     )
   }
 
-  // Only the hero return is seeded with field-level detail — say so plainly
+  // Only the hero return is seeded with field-level detail, say so plainly
   // instead of rendering an empty review shell.
   if (fields.length === 0 || docs.length === 0) {
     return (
@@ -144,7 +144,7 @@ export function ReviewPage() {
         title="Return review"
         subtitle={
           <>
-            {clientName(world, ret.clientId)} · {ret.formType} · TY{ret.taxYear} —{' '}
+            {clientName(world, ret.clientId)} · {ret.formType} · TY{ret.taxYear}:{' '}
             <span className="text-ink-400">click a field to trace it to its source, or click a document box to see what it feeds</span>
           </>
         }
@@ -160,7 +160,7 @@ export function ReviewPage() {
       />
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-        {/* LEFT — return fields */}
+        {/* LEFT: return fields */}
         <Card className="overflow-hidden">
           <div className="flex items-center justify-between border-b border-ink-100 bg-ink-50/60 px-4 py-2.5">
             <h2 className="text-sm font-semibold text-ink-800">Form 1040 fields</h2>
@@ -209,7 +209,7 @@ export function ReviewPage() {
                             {f.ai && f.affordance === 'ai-unverified' && (
                               <ConfidenceMeter score={f.ai.confidence} showLabel={false} size="sm" />
                             )}
-                            {/* an `editable` value is genuinely click-to-edit — the
+                            {/* an `editable` value is genuinely click-to-edit, the
                                 affordance tooltip promises it, so it has to be true */}
                             {editingId === f.id ? (
                               <div className="flex shrink-0 items-center gap-1.5">
@@ -272,7 +272,7 @@ export function ReviewPage() {
                                 <div className="rounded-lg border border-ink-200 bg-ink-50 p-2.5 text-xs text-ink-500">
                                   <Icon path={ICONS.person} size={12} className="mr-1 inline" />
                                   {f.affordance === 'locked'
-                                    ? 'System-derived value — not editable by hand.'
+                                    ? 'System-derived value, not editable by hand.'
                                     : 'Human-entered value.'}
                                 </div>
                               )}
@@ -287,7 +287,7 @@ export function ReviewPage() {
           </div>
         </Card>
 
-        {/* RIGHT — document viewer */}
+        {/* RIGHT: document viewer */}
         <Card className="overflow-hidden">
           <div className="flex items-center gap-1.5 overflow-x-auto border-b border-ink-100 bg-ink-50/60 px-3 py-2">
             {docs.map((d) => {
@@ -302,7 +302,7 @@ export function ReviewPage() {
                     hasHl && d.id !== activeDocId ? 'ring-1 ring-brand-300' : '',
                   ].join(' ')}
                 >
-                  {d.title.replace(' — ', ' · ')}
+                  {d.title}
                 </button>
               )
             })}
@@ -310,7 +310,7 @@ export function ReviewPage() {
           <div className="bg-ink-100/50 p-5">
             {activeDoc && (
               <>
-                {/* page navigation — traceability resolves to an exact page */}
+                {/* page navigation, traceability resolves to an exact page */}
                 {activeDoc.pageCount > 1 && (
                   <div className="mx-auto mb-3 flex max-w-[560px] items-center justify-center gap-1.5">
                     {Array.from({ length: activeDoc.pageCount }, (_, i) => i + 1).map((p) => {
@@ -344,7 +344,7 @@ export function ReviewPage() {
                 />
                 <p className="mx-auto mt-3 max-w-[560px] text-center text-2xs text-ink-400">
                   Click a highlighted box to see which return field it feeds. Uploaded{' '}
-                  {activeDoc.uploadedAt}. This is a styled mockup — no real OCR.
+                  {activeDoc.uploadedAt}. This is a styled mockup, with no real OCR.
                 </p>
               </>
             )}

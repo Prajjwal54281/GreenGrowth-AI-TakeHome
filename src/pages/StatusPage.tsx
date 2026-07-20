@@ -66,7 +66,7 @@ export function StatusPage() {
               <div>
                 <div className="text-2xs uppercase tracking-wide text-ink-400">Blocking?</div>
                 <div className={`text-sm font-semibold ${ret.flags.blocked ? 'text-amber-600' : 'text-green-600'}`}>
-                  {ret.flags.blocked ? 'Yes — 1 item' : 'No'}
+                  {ret.flags.blocked ? 'Yes, 1 item' : 'No'}
                 </div>
               </div>
             </div>
@@ -76,7 +76,7 @@ export function StatusPage() {
             <div className="mb-3 flex items-center justify-between">
               <h2 className="text-sm font-semibold text-ink-800">Progress</h2>
               <span className="text-2xs text-ink-400">
-                Same underlying model — {audience === 'client' ? 'plain-language' : 'operational'} rendering
+                Same underlying model, {audience === 'client' ? 'plain-language' : 'operational'} rendering
               </span>
             </div>
             <StatusTimeline ret={ret} audience={audience} />

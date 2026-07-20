@@ -85,7 +85,7 @@ export function ReturnsListPage() {
                   </td>
                   <td className="px-4 py-2.5 text-ink-500">{ret.formType}</td>
                   <td className="px-4 py-2.5"><StageBadge stage={ret.stage} /></td>
-                  <td className="px-4 py-2.5 text-ink-500">{TEAM_BY_ID[ret.preparerId]?.name ?? '—'}</td>
+                  <td className="px-4 py-2.5 text-ink-500">{TEAM_BY_ID[ret.preparerId]?.name ?? '·'}</td>
                   <td className="px-4 py-2.5"><OwnerPill owner={ret.nextActionOwner} /></td>
                   <td className={`px-4 py-2.5 ${ret.flags.overdue ? 'font-semibold text-red-600' : 'text-ink-500'}`}>{relativeToNow(ret.dueDate)}</td>
                   <td className="px-4 py-2.5 text-right font-mono text-ink-700">{money(ret.estimatedRefund)}</td>

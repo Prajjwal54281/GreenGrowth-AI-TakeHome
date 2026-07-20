@@ -1,5 +1,5 @@
 /* ============================================================================
-   PRIORITIZATION LOGIC — Challenge 07 "Actionable Dashboard"
+   PRIORITIZATION LOGIC: Challenge 07 "Actionable Dashboard"
    Real, inspectable ranking. Given a return, produce a numeric urgency score
    AND the human-readable reasons behind it, so the dashboard can explain WHY
    something is at the top of the queue ("Due in 2 days · Blocked 14 days").
@@ -30,12 +30,12 @@ export function scoreReturn(ret: TaxReturn, now: string = NOW): RankedReturn {
   const reasons: PriorityReason[] = []
   let score = 0
 
-  // filed returns are done — near-zero priority
+  // filed returns are done, near-zero priority
   if (ret.stage === 'filed') {
     return { ret, score: 0, reasons: [{ label: 'Filed', weight: 0, tone: 'info' }], headline: 'Filed' }
   }
 
-  // 1. Deadline proximity — the dominant factor. Overdue is worst.
+  // 1. Deadline proximity, the dominant factor. Overdue is worst.
   const daysToDue = daysBetween(now, ret.dueDate)
   if (daysToDue < 0) {
     const w = CLAMP(40 + Math.abs(daysToDue) * 1.5, 40, 90)
@@ -53,7 +53,7 @@ export function scoreReturn(ret: TaxReturn, now: string = NOW): RankedReturn {
     reasons.push({ label: `Due in ${daysToDue}d`, weight: 0, tone: 'info' })
   }
 
-  // 2. Blocked / waiting on the client — the ball is out of the firm's court,
+  // 2. Blocked / waiting on the client, the ball is out of the firm's court,
   //    and the longer it sits the more it needs a nudge.
   if (ret.daysWaitingOnClient > 0) {
     const w = CLAMP(ret.daysWaitingOnClient * 1.6, 0, 30)
@@ -76,7 +76,7 @@ export function scoreReturn(ret: TaxReturn, now: string = NOW): RankedReturn {
     reasons.push({ label: `${ret.openReviewFlags} review flag${ret.openReviewFlags > 1 ? 's' : ''}`, weight: w, tone: 'warning' })
   }
 
-  // 4. AI trust signals — a wrong or conflicting AI value needs a human now.
+  // 4. AI trust signals, a wrong or conflicting AI value needs a human now.
   if (ret.flags.aiError) {
     score += 15
     reasons.push({ label: 'AI value needs correction', weight: 15, tone: 'danger' })

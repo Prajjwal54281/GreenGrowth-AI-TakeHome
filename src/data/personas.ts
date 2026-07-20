@@ -1,9 +1,9 @@
 import type { Persona } from './types'
 
 /* ============================================================================
-   PERSONAS — Challenge 05 "Role-Aware Experiences"
+   PERSONAS: Challenge 05 "Role-Aware Experiences"
    Four switchable identities covering the required spread: a client, a
-   preparer, a manager (team lens), and the edge case — a firm employee who
+   preparer, a manager (team lens), and the edge case, a firm employee who
    ALSO has a personal return in the system (Priya), who can flip between
    "staff mode" and "my own taxes".
    ========================================================================== */
@@ -12,7 +12,7 @@ export const PERSONAS: Persona[] = [
   {
     id: 'u-client',
     name: 'Sarah Chen',
-    title: 'Client — Individual filer',
+    title: 'Client · Individual filer',
     roles: ['client'],
     primaryRole: 'client',
     initials: 'SC',
@@ -43,14 +43,14 @@ export const PERSONAS: Persona[] = [
   {
     id: 'u-business',
     name: 'Daniel Okonkwo',
-    title: 'Business owner — Blue Harbor Design Co',
+    title: 'Business owner · Blue Harbor Design Co',
     roles: ['client'],
     primaryRole: 'client',
     initials: 'DO',
     color: '#0369a1',
     personalClientId: 'c-blueharbor',
     entityContext: 'business',
-    blurb: 'Files an 1120S for his design studio — the business-entity client experience.',
+    blurb: 'Files an 1120S for his design studio, the business-entity client experience.',
   },
   {
     id: 'u-admin',
@@ -71,7 +71,7 @@ export const PERSONAS: Persona[] = [
     initials: 'PN',
     color: '#d97706',
     personalClientId: 'c-nair',
-    blurb: 'Edge case: firm staff who also files her own return — switches between staff mode and her own taxes.',
+    blurb: 'Edge case: firm staff who also files her own return, switching between staff mode and her own taxes.',
   },
 ]
 

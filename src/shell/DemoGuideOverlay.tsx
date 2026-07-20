@@ -6,7 +6,7 @@ import { PERSONAS } from '../data/personas'
 import { Icon, ICONS } from '../components/ui/Icon'
 
 /* ============================================================================
-   DEMO GUIDE — the reviewer's map.
+   DEMO GUIDE: the reviewer's map.
    A slide-over that lists every challenge with a one-click jump to the exact
    screen/state that demonstrates it, plus quick persona switching. This is the
    affordance that makes the prototype self-guiding for a grader.

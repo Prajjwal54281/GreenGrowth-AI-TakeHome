@@ -50,7 +50,7 @@ export function ReturnOverviewPage() {
           <Icon path={ICONS.warning} size={14} className="mt-0.5 shrink-0 text-ink-400" />
           <span>
             This is one of 121 returns generated to exercise the dashboard’s prioritization at
-            realistic volume — it has no seeded field-level detail.{' '}
+            realistic volume, so it has no seeded field-level detail.{' '}
             <Link to={`/returns/${HERO_RETURN_ID}/review`} className="font-semibold text-brand-700 hover:underline">
               Open Sarah Chen’s return
             </Link>{' '}

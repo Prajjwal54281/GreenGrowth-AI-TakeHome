@@ -98,7 +98,7 @@ export function heroQuestionnaire(): QuestionnaireItem[] {
       returnId: HERO_RETURN_ID,
       section: 'Investments',
       question: 'Did you sell any stocks or securities in 2025?',
-      answer: 'Yes — Fidelity brokerage',
+      answer: 'Yes, Fidelity brokerage',
       affordance: 'verified',
       required: true,
     },
@@ -121,7 +121,7 @@ export function heroQuestionnaire(): QuestionnaireItem[] {
       required: true,
     },
   )
-  // volume filler — enough that search/filter/group are genuinely necessary
+  // volume filler, enough that search/filter/group are genuinely necessary
   const affs: AffordanceState[] = ['ai-unverified', 'verified', 'editable', 'locked']
   for (let i = 0; i < 132; i++) {
     const topic = pick(rng, Q_TOPICS)
@@ -177,8 +177,8 @@ export function heroWarnings(): Warning[] {
     'Prior-year carryover not yet confirmed for this section.',
     'Rounding difference under $1 detected between schedule and summary.',
     'State return will need this figure once federal is final.',
-    'Document date is outside the tax year — verify it belongs to 2025.',
-    'Possible duplicate entry — review before finalizing.',
+    'Document date is outside the tax year, so verify it belongs to 2025.',
+    'Possible duplicate entry. Review before finalizing.',
     'Estimated payment not matched to an IRS confirmation number.',
   ]
   for (let i = 0; i < 86; i++) {
@@ -226,7 +226,7 @@ export function generateBook(): GeneratedBook {
   const clients: Client[] = []
   const returns: TaxReturn[] = []
   // Challenge 07 asks that the dashboard stay usable when someone owns hundreds
-  // of returns — so the book is deliberately large and Marcus is deliberately
+  // of returns, so the book is deliberately large and Marcus is deliberately
   // overloaded (~200 of these land on him).
   const count = 520
 
@@ -268,7 +268,7 @@ export function generateBook(): GeneratedBook {
     else if (stage === 'documents') { nextActionOwner = 'client'; nextAction = 'Upload requested documents' }
     else if (stage === 'review') { nextActionOwner = 'reviewer'; nextAction = 'Complete reviewer sign-off' }
     else if (stage === 'signoff') { nextActionOwner = 'client'; nextAction = 'Approve the finished return' }
-    else if (stage === 'filed') { nextActionOwner = 'firm'; nextAction = 'Filed — archive copy' }
+    else if (stage === 'filed') { nextActionOwner = 'firm'; nextAction = 'Filed, archive copy' }
 
     returns.push({
       id: `RET-${2000 + i}`,

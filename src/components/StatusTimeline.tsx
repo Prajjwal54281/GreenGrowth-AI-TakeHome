@@ -4,7 +4,7 @@ import { Icon, ICONS } from './ui/Icon'
 import { relativeToNow } from '../lib/format'
 
 /* ============================================================================
-   STATUS TIMELINE — Challenge 06
+   STATUS TIMELINE: Challenge 06
    ONE stage model, rendered for two audiences. Client sees plain-language
    labels and only what matters to them; staff sees operational labels plus
    owner, next action, and blockers. Both are driven by the SAME data, so they
@@ -84,7 +84,7 @@ export function StatusTimeline({
                       <span>
                         <span className="font-semibold">Blocked:</span>{' '}
                         {audience === 'client'
-                          ? 'We’re waiting on one item from you — see your open requests.'
+                          ? 'We’re waiting on one item from you. See your open requests.'
                           : ret.blockingReason}
                       </span>
                     </div>

@@ -75,7 +75,7 @@ function QueueRow({ ranked, rank, onOpen }: { ranked: RankedReturn; rank: number
       </div>
       <div className="hidden shrink-0 items-center gap-1.5 sm:flex">
         <span className="rounded bg-ink-100 px-1.5 py-0.5 text-2xs font-semibold text-ink-500">
-          {TEAM_BY_ID[ret.preparerId]?.initials ?? '—'}
+          {TEAM_BY_ID[ret.preparerId]?.initials ?? '·'}
         </span>
         <OwnerPill owner={ret.nextActionOwner} />
       </div>
@@ -183,7 +183,7 @@ export function DashboardPage() {
             </div>
             <span className="text-2xs text-ink-400">
               {filtered.length > QUEUE_LIMIT
-                ? `top ${QUEUE_LIMIT} of ${filtered.length} — filter to narrow`
+                ? `top ${QUEUE_LIMIT} of ${filtered.length}, filter to narrow`
                 : `${filtered.length} shown`}
             </span>
           </div>
@@ -197,7 +197,7 @@ export function DashboardPage() {
                 <QueueRow key={r.ret.id} ranked={r} rank={i + 1} onOpen={() => openReturn(r.ret)} />
               ))}
               {filtered.length === 0 && (
-                <div className="p-8 text-center text-sm text-ink-400">Nothing in this filter — nice.</div>
+                <div className="p-8 text-center text-sm text-ink-400">Nothing in this filter. Nice.</div>
               )}
             </div>
           )}
@@ -273,7 +273,7 @@ export function DashboardPage() {
             <p className="mt-1 text-xs leading-relaxed text-ink-500">
               Each return gets an urgency score from deadline proximity, days waiting on the client,
               blocked status, open review flags, and AI trust signals (a wrong or conflicting value
-              scores higher). Hover any score to see the factors. It’s real code, not a static sort —
+              scores higher). Hover any score to see the factors. It’s real code, not a static sort,
               see <code className="rounded bg-ink-100 px-1 text-ink-600">src/logic/priority.ts</code>.
             </p>
           </Card>

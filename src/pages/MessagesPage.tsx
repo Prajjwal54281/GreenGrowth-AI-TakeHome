@@ -14,7 +14,7 @@ export function MessagesPage() {
   useTrackTrail('Messages', 'messages')
   const isClient = role === 'client'
 
-  // A client only ever sees conversations on their OWN return — staff see the
+  // A client only ever sees conversations on their OWN return, staff see the
   // whole firm's. Without this a business client could read another client's
   // threads. (Challenge 05: permissions, not just navigation.)
   const own = personalReturnFor(world, persona)
@@ -26,7 +26,7 @@ export function MessagesPage() {
     <PageContainer>
       <PageHeader
         title="Messages"
-        subtitle="Every conversation is attached to a document or issue — never a generic inbox."
+        subtitle="Every conversation is attached to a document or issue, never a generic inbox."
         challenges={['02']}
       />
       <Card className="overflow-hidden">
@@ -53,7 +53,7 @@ export function MessagesPage() {
                 </div>
                 <div className="truncate text-2xs text-ink-500">
                   {threadClient} · {t.ref.label}
-                  {lastVisible && <> — “{lastVisible.body.slice(0, 60)}…”</>}
+                  {lastVisible && <>: “{lastVisible.body.slice(0, 60)}…”</>}
                 </div>
               </div>
               <span className={`shrink-0 rounded-md border px-1.5 py-0.5 text-2xs font-semibold ${t.nextOwner === 'client' ? 'border-amber-200 bg-amber-50 text-amber-700' : 'border-blue-200 bg-blue-50 text-blue-700'}`}>

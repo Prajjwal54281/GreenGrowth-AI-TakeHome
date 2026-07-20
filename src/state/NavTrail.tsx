@@ -1,5 +1,5 @@
 /* ============================================================================
-   NAV TRAIL — Challenge 04 "Navigation without getting lost"
+   NAV TRAIL: Challenge 04 "Navigation without getting lost"
    Records the last few meaningful places the user has been (with a label and
    the object kind) so the shell can offer a real "back to where I was" trail,
    not just the browser's blind back button. Persisted per-session.

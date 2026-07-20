@@ -11,7 +11,7 @@ import { StatusTimeline } from '../components/StatusTimeline'
 import { getReturn } from '../data/selectors'
 import { Icon, ICONS } from '../components/ui/Icon'
 
-/* Challenge 03 — a brand-new client knows their next action within 10 seconds.
+/* Challenge 03, a brand-new client knows their next action within 10 seconds.
    One dominant primary task; navigation and detail are deferred until relevant.
    The "returning" toggle shows how the UI relaxes after onboarding. */
 export function ClientHomePage() {
@@ -60,7 +60,7 @@ export function ClientHomePage() {
 
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          {/* greet the PERSON, not the entity — "Welcome, Blue" would be wrong
+          {/* greet the PERSON, not the entity, "Welcome, Blue" would be wrong
               for a business filer called Blue Harbor Design Co */}
           <h1 className="text-xl font-bold text-ink-900">
             Welcome{mode === 'firstRun' ? '' : ' back'},{' '}
@@ -79,7 +79,7 @@ export function ClientHomePage() {
         </div>
       </div>
 
-      {/* THE one primary task — dominates the screen in first-run */}
+      {/* THE one primary task, dominates the screen in first-run */}
       {primary && (
         <Card className="mb-4 overflow-hidden border-brand-200">
           <div className="bg-gradient-to-br from-brand-600 to-brand-800 p-6 text-white">
@@ -100,7 +100,7 @@ export function ClientHomePage() {
         </Card>
       )}
 
-      {/* progress — always visible */}
+      {/* progress, always visible */}
       <Card className="mb-4 p-4">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-ink-800">Your return · {doneCount} of {steps.length} steps</h2>

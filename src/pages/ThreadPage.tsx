@@ -125,7 +125,7 @@ export function ThreadPage() {
                 <Button onClick={send}>Send</Button>
               </div>
               {visibility === 'internal' && !isClient && (
-                <p className="mt-1 text-2xs text-amber-600">This note stays inside the firm — the client can’t see internal notes.</p>
+                <p className="mt-1 text-2xs text-amber-600">This note stays inside the firm. The client can’t see internal notes.</p>
               )}
             </div>
           </Card>

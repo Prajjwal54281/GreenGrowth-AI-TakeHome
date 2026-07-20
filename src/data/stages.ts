@@ -1,5 +1,5 @@
 /* ============================================================================
-   STATUS MODEL — Challenge 06
+   STATUS MODEL: Challenge 06
    ONE ordered set of stages. The client rendering uses `clientLabel` (plain
    language, no firm jargon); the staff rendering uses `staffLabel`. Both read
    from this single source so they can never drift apart.
@@ -36,8 +36,8 @@ export const OWNER_LABEL: Record<OwnerRole, string> = {
 export const CLIENT_NEXT: Record<Stage, string> = {
   intake: 'Answer a few questions so we can set up your return.',
   documents: 'Upload the documents we requested.',
-  preparation: 'Nothing needed from you — we’ll reach out if we have questions.',
-  review: 'Nothing needed from you — your CPA is doing the final check.',
+  preparation: 'Nothing needed from you. We’ll reach out if we have questions.',
+  review: 'Nothing needed from you. Your CPA is doing the final check.',
   signoff: 'Review your finished return and approve it for filing.',
   filed: 'All done. Your return has been filed.',
 }

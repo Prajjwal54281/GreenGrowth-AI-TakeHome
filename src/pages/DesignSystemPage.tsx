@@ -8,7 +8,7 @@ import { ConfidenceMeter } from '../components/affordance/ConfidenceMeter'
 import { AFFORDANCE_ORDER } from '../design/affordances'
 import { HERO_RETURN_ID } from '../data/hero'
 
-/* Challenge 08 — the legend/key plus the same affordance system shown across
+/* Challenge 08, the legend/key plus the same affordance system shown across
    several contexts (a form field, a table cell, a questionnaire answer). */
 export function DesignSystemPage() {
   useTrackTrail('Design system', 'design')
@@ -31,7 +31,7 @@ export function DesignSystemPage() {
         <div className="space-y-4">
           {/* Context 1: a form field */}
           <Card>
-            <CardHeader title="On a return field" subtitle="Review screen — click-to-edit where editable" />
+            <CardHeader title="On a return field" subtitle="Review screen · click-to-edit where editable" />
             <div className="flex flex-wrap items-center gap-3 p-4">
               {AFFORDANCE_ORDER.map((s) => (
                 <div key={s} className="flex flex-col items-center gap-1">
@@ -65,7 +65,7 @@ export function DesignSystemPage() {
                     <td className="px-4 py-2 text-ink-700">{r.l}</td>
                     <td className="px-4 py-2"><AffordanceValue state={r.s} size="sm">{r.v}</AffordanceValue></td>
                     <td className="px-4 py-2">
-                      {r.s === 'ai-unverified' ? <ConfidenceMeter score={r.c} size="sm" /> : <span className="text-2xs text-ink-300">—</span>}
+                      {r.s === 'ai-unverified' ? <ConfidenceMeter score={r.c} size="sm" /> : <span className="text-2xs text-ink-300">·</span>}
                     </td>
                   </tr>
                 ))}

@@ -1,9 +1,9 @@
 import type { TaxDocument, DocRegion } from '../../data/types'
 
 /* ============================================================================
-   DOCUMENT FACSIMILES — Challenge 01
+   DOCUMENT FACSIMILES: Challenge 01
    Styled HTML mockups of a W-2, 1099-INT, 1099-DIV, and brokerage statement.
-   NOT real documents and NOT parsed — every tracked box is positioned with the
+   NOT real documents and NOT parsed. Every tracked box is positioned with the
    SAME percentage coordinates as its traceability region, so the highlight
    overlay lines up exactly. Decorative boxes add realism.
    ========================================================================== */
@@ -67,22 +67,22 @@ function DecoBoxEl({ b }: { b: DecoBox }) {
 
 const DECO: Record<TaxDocument['type'], DecoBox[]> = {
   'W-2': [
-    { x: 51, y: 42, w: 44, h: 9, label: 'Box 3 — SS wages', value: '90,450.00' },
-    { x: 5, y: 42, w: 44, h: 9, label: 'Box 4 — SS tax withheld', value: '5,607.00' },
-    { x: 51, y: 53, w: 44, h: 9, label: 'Box 5 — Medicare wages', value: '90,450.00' },
-    { x: 5, y: 53, w: 44, h: 9, label: 'Box 6 — Medicare tax', value: '1,311.00' },
-    { x: 51, y: 72, w: 44, h: 11, label: 'Box 17 — State tax', value: '4,120.00' },
+    { x: 51, y: 42, w: 44, h: 9, label: 'Box 3 · SS wages', value: '90,450.00' },
+    { x: 5, y: 42, w: 44, h: 9, label: 'Box 4 · SS tax withheld', value: '5,607.00' },
+    { x: 51, y: 53, w: 44, h: 9, label: 'Box 5 · Medicare wages', value: '90,450.00' },
+    { x: 5, y: 53, w: 44, h: 9, label: 'Box 6 · Medicare tax', value: '1,311.00' },
+    { x: 51, y: 72, w: 44, h: 11, label: 'Box 17 · State tax', value: '4,120.00' },
   ],
   '1099-INT': [
     { x: 5, y: 33, w: 42, h: 12, label: 'Payer TIN', value: '**-***4821' },
-    { x: 51, y: 47, w: 44, h: 10, label: 'Box 4 — Fed tax withheld', value: '0.00' },
-    { x: 5, y: 47, w: 42, h: 10, label: 'Box 8 — Tax-exempt interest', value: '0.00' },
+    { x: 51, y: 47, w: 44, h: 10, label: 'Box 4 · Fed tax withheld', value: '0.00' },
+    { x: 5, y: 47, w: 42, h: 10, label: 'Box 8 · Tax-exempt interest', value: '0.00' },
   ],
   '1099-DIV': [
     { x: 5, y: 26, w: 42, h: 9, label: 'Payer', value: 'Vanguard' },
     { x: 5, y: 37, w: 42, h: 9, label: 'Recipient TIN', value: '**-***7731' },
-    { x: 51, y: 59, w: 44, h: 9, label: 'Box 3 — Nondividend distr.', value: '0.00' },
-    { x: 5, y: 59, w: 42, h: 9, label: 'Box 7 — Foreign tax paid', value: '38.00' },
+    { x: 51, y: 59, w: 44, h: 9, label: 'Box 3 · Nondividend distr.', value: '0.00' },
+    { x: 5, y: 59, w: 42, h: 9, label: 'Box 7 · Foreign tax paid', value: '38.00' },
   ],
   brokerage: [
     { x: 6, y: 70, w: 42, h: 7, label: 'Short-term proceeds', value: '12,050.00' },
@@ -138,7 +138,7 @@ export function Facsimile({
           <div className="text-[8px] text-ink-400">Recipient: Sarah Chen</div>
         </div>
 
-        {/* Decorative boxes — page 1 only */}
+        {/* Decorative boxes, page 1 only */}
         {page === 1 && DECO[doc.type].map((b, i) => <DecoBoxEl key={i} b={b} />)}
 
         {/* Tracked, highlightable regions for THIS page */}
@@ -155,13 +155,13 @@ export function Facsimile({
         {/* section captions */}
         {doc.type === 'brokerage' && page === 1 && (
           <div className="absolute inset-x-[6%] top-[44%] text-[9px] font-semibold uppercase tracking-wide text-ink-500">
-            Realized gain / loss — totals
+            Realized gain / loss · totals
           </div>
         )}
         {doc.type === 'brokerage' && page === 2 && (
           <>
             <div className="absolute inset-x-[6%] top-[24%] text-[9px] font-semibold uppercase tracking-wide text-ink-500">
-              Lot-level detail — long-term holdings
+              Lot-level detail · long-term holdings
             </div>
             <div className="absolute inset-x-[6%] top-[54%] text-[8px] leading-relaxed text-ink-400">
               Cost basis reported to the IRS for covered securities. Non-covered lots are
