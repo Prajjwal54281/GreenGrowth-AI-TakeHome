@@ -121,9 +121,9 @@ export function heroQuestionnaire(): QuestionnaireItem[] {
       required: true,
     },
   )
-  // volume filler
+  // volume filler — enough that search/filter/group are genuinely necessary
   const affs: AffordanceState[] = ['ai-unverified', 'verified', 'editable', 'locked']
-  for (let i = 0; i < 76; i++) {
+  for (let i = 0; i < 132; i++) {
     const topic = pick(rng, Q_TOPICS)
     const q = pick(rng, Q_TEMPLATES).replace('{x}', topic)
     const answered = rng() > 0.4
@@ -181,7 +181,7 @@ export function heroWarnings(): Warning[] {
     'Possible duplicate entry — review before finalizing.',
     'Estimated payment not matched to an IRS confirmation number.',
   ]
-  for (let i = 0; i < 44; i++) {
+  for (let i = 0; i < 86; i++) {
     out.push({
       id: `WARN-${i + 100}`,
       returnId: HERO_RETURN_ID,

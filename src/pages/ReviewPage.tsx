@@ -11,7 +11,7 @@ import {
 } from '../data/selectors'
 import type { ReturnField, DocRegion } from '../data/types'
 import { PageContainer, PageHeader } from '../components/PageHeader'
-import { Card } from '../components/ui/primitives'
+import { Card, Button } from '../components/ui/primitives'
 import { AffordanceValue } from '../components/affordance/AffordanceValue'
 import { AffordanceLegend } from '../components/affordance/AffordanceLegend'
 import { ConfidenceMeter } from '../components/affordance/ConfidenceMeter'
@@ -50,7 +50,7 @@ function CalcBreakdown({ field }: { field: ReturnField }) {
 export function ReviewPage() {
   const { returnId = '', fieldId } = useParams()
   const navigate = useNavigate()
-  const { world, recentlyChanged } = useApp()
+  const { world, recentlyChanged, dispatch } = useApp()
 
   const ret = getReturn(world, returnId)
   const fields = useMemo(() => fieldsFor(world, returnId), [world, returnId])
@@ -60,7 +60,14 @@ export function ReviewPage() {
   const [activeDocId, setActiveDocId] = useState(docs[0]?.id)
   const [highlightRegions, setHighlightRegions] = useState<string[]>([])
   const [pulseFieldIds, setPulseFieldIds] = useState<string[]>([])
+  const [editingId, setEditingId] = useState<string | undefined>()
+  const [draft, setDraft] = useState('')
   const fieldRefs = useRef<Record<string, HTMLDivElement | null>>({})
+
+  const commitEdit = (fieldId: string) => {
+    dispatch({ type: 'EDIT_FIELD', fieldId, value: draft })
+    setEditingId(undefined)
+  }
 
   useTrackTrail(ret ? `Review · ${clientName(world, ret.clientId)}` : '', 'review')
 
@@ -175,11 +182,8 @@ export function ReviewPage() {
                             pulsing ? 'trace-pulse' : '',
                           ].join(' ')}
                         >
-                          <button
-                            onClick={() => selectField(f)}
-                            className="flex w-full items-center gap-3 px-3 py-2.5 text-left"
-                          >
-                            <div className="min-w-0 flex-1">
+                          <div className="flex w-full items-center gap-3 px-3 py-2.5">
+                            <button onClick={() => selectField(f)} className="min-w-0 flex-1 text-left">
                               <div className="flex items-center gap-1.5">
                                 <span className="text-2xs font-semibold text-brand-700">{f.line}</span>
                                 {f.calculation && (
@@ -194,17 +198,46 @@ export function ReviewPage() {
                                 )}
                               </div>
                               <div className="truncate text-sm font-medium text-ink-800">{f.label}</div>
-                            </div>
+                            </button>
                             {f.ai && f.affordance === 'ai-unverified' && (
                               <ConfidenceMeter score={f.ai.confidence} showLabel={false} size="sm" />
                             )}
-                            <AffordanceValue state={f.affordance}>{money(f.value)}</AffordanceValue>
-                            <Icon
-                              path={ICONS.chevronRight}
-                              size={16}
-                              className={`shrink-0 text-ink-300 transition ${isSel ? 'rotate-90 text-brand-500' : ''}`}
-                            />
-                          </button>
+                            {/* an `editable` value is genuinely click-to-edit — the
+                                affordance tooltip promises it, so it has to be true */}
+                            {editingId === f.id ? (
+                              <div className="flex shrink-0 items-center gap-1.5">
+                                <span className="text-2xs text-ink-400">$</span>
+                                <input
+                                  autoFocus
+                                  value={draft}
+                                  onChange={(e) => setDraft(e.target.value)}
+                                  onKeyDown={(e) => {
+                                    if (e.key === 'Enter') commitEdit(f.id)
+                                    if (e.key === 'Escape') setEditingId(undefined)
+                                  }}
+                                  className="w-24 rounded-md border border-ink-300 px-2 py-1 text-sm tabular-nums"
+                                />
+                                <Button size="sm" onClick={() => commitEdit(f.id)}>Save</Button>
+                                <Button size="sm" variant="ghost" onClick={() => setEditingId(undefined)}>
+                                  Cancel
+                                </Button>
+                              </div>
+                            ) : (
+                              <AffordanceValue
+                                state={f.affordance}
+                                onEdit={() => { setEditingId(f.id); setDraft(f.value) }}
+                              >
+                                {money(f.value)}
+                              </AffordanceValue>
+                            )}
+                            <button onClick={() => selectField(f)} className="shrink-0">
+                              <Icon
+                                path={ICONS.chevronRight}
+                                size={16}
+                                className={`text-ink-300 transition ${isSel ? 'rotate-90 text-brand-500' : ''}`}
+                              />
+                            </button>
+                          </div>
 
                           {/* inline detail for the selected field */}
                           {isSel && (

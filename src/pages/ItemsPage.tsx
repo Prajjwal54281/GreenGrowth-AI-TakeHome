@@ -8,7 +8,7 @@ import {
 } from '../data/selectors'
 import type { AffordanceState } from '../design/affordances'
 import { PageContainer, PageHeader } from '../components/PageHeader'
-import { Card } from '../components/ui/primitives'
+import { Card, Button } from '../components/ui/primitives'
 import { AffordanceValue } from '../components/affordance/AffordanceValue'
 import { NoSeededDetail } from '../components/NoSeededDetail'
 import { Icon, ICONS } from '../components/ui/Icon'
@@ -41,7 +41,7 @@ type GroupBy = 'kind' | 'section' | 'state' | 'none'
 
 export function ItemsPage() {
   const { returnId = '' } = useParams()
-  const { world } = useApp()
+  const { world, dispatch } = useApp()
   const navigate = useNavigate()
   const ret = getReturn(world, returnId)
   useTrackTrail(ret ? `Items · ${clientName(world, ret.clientId)}` : '', 'items')
@@ -50,6 +50,13 @@ export function ItemsPage() {
   const [activeKinds, setActiveKinds] = useState<Set<Kind>>(new Set())
   const [groupBy, setGroupBy] = useState<GroupBy>('kind')
   const [stateFilter, setStateFilter] = useState<AffordanceState | 'all'>('all')
+  const [editingItem, setEditingItem] = useState<string | undefined>()
+  const [answerDraft, setAnswerDraft] = useState('')
+
+  const saveAnswer = (itemId: string) => {
+    if (answerDraft.trim()) dispatch({ type: 'ANSWER_QUESTION', itemId, answer: answerDraft.trim() })
+    setEditingItem(undefined)
+  }
 
   const items = useMemo<Item[]>(() => {
     if (!ret) return []
@@ -198,7 +205,38 @@ export function ItemsPage() {
                     {it.severity && (
                       <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${it.severity === 'critical' ? 'bg-red-100 text-red-700' : it.severity === 'warning' ? 'bg-amber-100 text-amber-700' : 'bg-ink-100 text-ink-500'}`}>{it.severity}</span>
                     )}
-                    {it.state && <AffordanceValue state={it.state} size="sm">{it.value ? money(it.value) : it.state}</AffordanceValue>}
+                    {editingItem === it.id ? (
+                      <div className="flex shrink-0 items-center gap-1.5" onClick={(e) => e.stopPropagation()}>
+                        <input
+                          autoFocus
+                          value={answerDraft}
+                          onChange={(e) => setAnswerDraft(e.target.value)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') saveAnswer(it.id)
+                            if (e.key === 'Escape') setEditingItem(undefined)
+                          }}
+                          placeholder="Your answer…"
+                          className="w-36 rounded-md border border-ink-300 px-2 py-1 text-xs"
+                        />
+                        <Button size="sm" onClick={() => saveAnswer(it.id)}>Save</Button>
+                      </div>
+                    ) : (
+                      it.state && (
+                        <span onClick={(e) => e.stopPropagation()}>
+                          <AffordanceValue
+                            state={it.state}
+                            size="sm"
+                            onEdit={
+                              it.kind === 'question'
+                                ? () => { setEditingItem(it.id); setAnswerDraft('') }
+                                : undefined
+                            }
+                          >
+                            {it.value ? money(it.value) : it.kind === 'question' && it.state === 'editable' ? 'Answer' : it.state}
+                          </AffordanceValue>
+                        </span>
+                      )
+                    )}
                     {clickable && <Icon path={ICONS.chevronRight} size={14} className="shrink-0 text-ink-300" />}
                   </div>
                 )
