@@ -5,7 +5,6 @@ A clickable frontend prototype of an AI-powered tax platform serving **clients a
 > **Live demo:** **https://greengrowth-ai-tax.vercel.app/dashboard**
 > **Reviewer tip:** click **Demo Guide** in the top bar. It lists every challenge with a one-click jump to the exact screen/state that demonstrates it, plus the persona switcher.
 
-I was assigned **all ten challenges** but scoped to a weekend, so I did **not** build all ten at equal depth. I picked four flagships that share two screens and built those deeply, took three more to a solid medium depth, and covered the rest at a genuine-but-lighter depth. Depth on a few beats shallow coverage of many. The split is called out honestly below and tagged in the UI (the little `01`…`10` chips).
 
 ---
 
