@@ -1,6 +1,6 @@
 # GreenGrowth — AI-Powered Tax Platform (prototype)
 
-GreenGrowth is a clickable frontend prototype for a greenfield (from-scratch) tax platform serving **clients and CPAs**. Built as a take-home case study. The frontend is the deliverable — visual design, interaction design, and information architecture. The backend is deliberately fake: seeded data and an in-memory store, no real OCR / AI / auth.
+A clickable frontend prototype of an AI-powered tax platform serving **clients and CPAs**, built for the GreenGrowth AI Engineer case study. This is a greenfield build — nothing existed beforehand, so the screens and the data model behind them are designed from scratch. The frontend is the deliverable: visual design, interaction design, and information architecture. The backend is deliberately fake — seeded data and an in-memory store, no real OCR / AI / auth.
 
 > **Live demo:** **https://greengrowth-ai-tax.vercel.app/dashboard**
 > **Reviewer tip:** click **Demo Guide** in the top bar — it lists every challenge with a one-click jump to the exact screen/state that demonstrates it, plus the persona switcher.

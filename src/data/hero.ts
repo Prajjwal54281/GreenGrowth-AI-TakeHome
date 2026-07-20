@@ -38,7 +38,7 @@ export const HERO_CLIENTS: Client[] = [
     id: 'c-nair',
     name: 'Priya Nair',
     entityType: 'individual',
-    email: 'priya.nair@greengrowth-cpa.example',
+    email: 'priya.nair@harborvane-cpa.example',
     primaryContact: 'Diane Okafor',
     since: 2024,
   },
