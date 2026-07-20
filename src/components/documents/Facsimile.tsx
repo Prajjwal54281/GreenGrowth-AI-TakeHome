@@ -99,15 +99,19 @@ const FORM_TITLE: Record<TaxDocument['type'], { code: string; name: string }> = 
 
 export function Facsimile({
   doc,
+  page = 1,
   highlightedRegionIds,
   onRegionClick,
 }: {
   doc: TaxDocument
+  /** which page of the document to render (Challenge 01: exact page) */
+  page?: number
   highlightedRegionIds: string[]
   onRegionClick?: (region: DocRegion) => void
 }) {
   const title = FORM_TITLE[doc.type]
-  const anyHighlighted = highlightedRegionIds.length > 0
+  const pageRegions = doc.regions.filter((r) => r.page === page)
+  const anyHighlighted = pageRegions.some((r) => highlightedRegionIds.includes(r.id))
   return (
     <div className="mx-auto w-full max-w-[560px]">
       <div className="relative aspect-[17/22] w-full overflow-hidden rounded-lg border border-ink-300 bg-white shadow-card">
@@ -134,13 +138,11 @@ export function Facsimile({
           <div className="text-[8px] text-ink-400">Recipient: Sarah Chen</div>
         </div>
 
-        {/* Decorative boxes */}
-        {DECO[doc.type].map((b, i) => (
-          <DecoBoxEl key={i} b={b} />
-        ))}
+        {/* Decorative boxes — page 1 only */}
+        {page === 1 && DECO[doc.type].map((b, i) => <DecoBoxEl key={i} b={b} />)}
 
-        {/* Tracked, highlightable regions */}
-        {doc.regions.map((r) => (
+        {/* Tracked, highlightable regions for THIS page */}
+        {pageRegions.map((r) => (
           <FormBox
             key={r.id}
             region={r}
@@ -150,15 +152,27 @@ export function Facsimile({
           />
         ))}
 
-        {/* brokerage gets a faux table caption */}
-        {doc.type === 'brokerage' && (
+        {/* section captions */}
+        {doc.type === 'brokerage' && page === 1 && (
           <div className="absolute inset-x-[6%] top-[44%] text-[9px] font-semibold uppercase tracking-wide text-ink-500">
             Realized gain / loss — totals
           </div>
         )}
+        {doc.type === 'brokerage' && page === 2 && (
+          <>
+            <div className="absolute inset-x-[6%] top-[24%] text-[9px] font-semibold uppercase tracking-wide text-ink-500">
+              Lot-level detail — long-term holdings
+            </div>
+            <div className="absolute inset-x-[6%] top-[54%] text-[8px] leading-relaxed text-ink-400">
+              Cost basis reported to the IRS for covered securities. Non-covered lots are
+              reported by the taxpayer. Totals on page 1 are the sum of the lots above.
+            </div>
+          </>
+        )}
 
         <div className="absolute inset-x-0 bottom-[1.5%] text-center text-[8px] text-ink-300">
           Styled mockup · not a real tax document · Greenfield prototype
+          {doc.pageCount > 1 && <> · page {page} of {doc.pageCount}</>}
         </div>
       </div>
     </div>

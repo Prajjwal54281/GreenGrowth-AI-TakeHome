@@ -13,6 +13,7 @@ import { ThreadPage } from './pages/ThreadPage'
 import { MessagesPage } from './pages/MessagesPage'
 import { TasksPage } from './pages/TasksPage'
 import { DesignSystemPage } from './pages/DesignSystemPage'
+import { AdminPage } from './pages/AdminPage'
 import { NotFound } from './pages/NotFound'
 
 export const router = createBrowserRouter([
@@ -34,6 +35,7 @@ export const router = createBrowserRouter([
       { path: 'messages', element: <MessagesPage /> },
       { path: 'tasks', element: <TasksPage /> },
       { path: 'design', element: <RequireStaff><DesignSystemPage /></RequireStaff> },
+      { path: 'admin', element: <RequireStaff><AdminPage /></RequireStaff> },
       { path: '*', element: <NotFound /> },
     ],
   },

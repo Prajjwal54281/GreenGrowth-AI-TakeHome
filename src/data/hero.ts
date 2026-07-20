@@ -22,6 +22,7 @@ import type {
 import { NOW, addDays } from './rng'
 
 export const HERO_RETURN_ID = 'RET-1001'
+export const BUSINESS_RETURN_ID = 'RET-1003'
 
 /* ---- Clients (hero + the staff-personal edge case) ----------------------- */
 export const HERO_CLIENTS: Client[] = [
@@ -40,6 +41,14 @@ export const HERO_CLIENTS: Client[] = [
     email: 'priya.nair@greenfield-cpa.example',
     primaryContact: 'Diane Okafor',
     since: 2024,
+  },
+  {
+    id: 'c-blueharbor',
+    name: 'Blue Harbor Design Co',
+    entityType: 'business',
+    email: 'daniel@blueharbor.example',
+    primaryContact: 'Lena Ortiz',
+    since: 2021,
   },
 ]
 
@@ -167,7 +176,10 @@ export const HERO_DOCUMENTS: TaxDocument[] = [
     type: 'brokerage',
     title: 'Brokerage Statement — Fidelity',
     issuer: 'Fidelity Investments',
-    pageCount: 1,
+    // multi-page on purpose: the summary totals are on page 1, but the lot-level
+    // detail that actually explains the basis lives on page 2, so traceability
+    // has to resolve to an exact PAGE, not just a document.
+    pageCount: 2,
     uploadedAt: addDays(NOW, -12),
     regions: [
       {
@@ -184,6 +196,22 @@ export const HERO_DOCUMENTS: TaxDocument[] = [
         bbox: { x: 6, y: 61, w: 88, h: 8 },
         label: 'Realized — Total cost basis',
         rawValue: '38,900.00',
+        feedsFieldIds: ['FLD-CAPGAIN'],
+      },
+      {
+        id: 'R-BRK-LOT-AAPL',
+        page: 2,
+        bbox: { x: 6, y: 32, w: 88, h: 8 },
+        label: 'Lot detail — AAPL (long-term)',
+        rawValue: '21,400.00',
+        feedsFieldIds: ['FLD-CAPGAIN'],
+      },
+      {
+        id: 'R-BRK-LOT-VTI',
+        page: 2,
+        bbox: { x: 6, y: 41, w: 88, h: 8 },
+        label: 'Lot detail — VTI (long-term)',
+        rawValue: '17,500.00',
         feedsFieldIds: ['FLD-CAPGAIN'],
       },
     ],
@@ -281,7 +309,7 @@ export const HERO_FIELDS: ReturnField[] = [
     // shown value is the AI's (wrong) suggestion until a human corrects it
     value: '3,600.00',
     affordance: 'ai-unverified',
-    sourceRegionIds: ['R-BRK-PROCEEDS', 'R-BRK-BASIS', 'R-DIV-B2A'],
+    sourceRegionIds: ['R-BRK-PROCEEDS', 'R-BRK-BASIS', 'R-BRK-LOT-AAPL', 'R-BRK-LOT-VTI', 'R-DIV-B2A'],
     calculation: 'Brokerage proceeds − cost basis (+ cap-gain distributions)',
     calcOperands: [
       { label: 'Fidelity · proceeds', value: '45,200.00' },
@@ -294,7 +322,7 @@ export const HERO_FIELDS: ReturnField[] = [
       rationale:
         'Proceeds minus cost basis should be 45,200 − 38,900 = 6,300, plus 540 in distributions = 6,840. The suggested value (3,600) does not reconcile — the extraction likely transposed a figure. This needs a human.',
       suggestedValue: '3,600.00',
-      evidenceRegionIds: ['R-BRK-PROCEEDS', 'R-BRK-BASIS', 'R-DIV-B2A'],
+      evidenceRegionIds: ['R-BRK-PROCEEDS', 'R-BRK-BASIS', 'R-BRK-LOT-AAPL', 'R-DIV-B2A'],
       isWrong: true,
       conflict: {
         otherValue: '41,200.00',
@@ -424,6 +452,96 @@ export const HERO_THREADS: Thread[] = [
       },
     ],
   },
+  // a thread attached to a DOCUMENT rather than a field
+  {
+    id: 'TH-W2-CONTOSO',
+    returnId: HERO_RETURN_ID,
+    subject: 'Contoso W-2 — is this the corrected copy?',
+    ref: { kind: 'document', id: 'DOC-W2-CONTOSO', label: 'W-2 — Contoso Corp' },
+    status: 'open',
+    nextOwner: 'client',
+    messages: [
+      {
+        id: 'M-5',
+        authorId: 'u-preparer',
+        authorName: 'Marcus Reed',
+        authorRole: 'preparer',
+        body: 'Sarah mentioned Contoso reissued her W-2 in February. Need to confirm this upload is the W-2c and not the original.',
+        visibility: 'internal',
+        createdAt: addDays(NOW, -6),
+      },
+      {
+        id: 'M-6',
+        authorId: 'u-preparer',
+        authorName: 'Marcus Reed',
+        authorRole: 'preparer',
+        body: 'Hi Sarah — quick one: is the Contoso W-2 you uploaded the corrected version (marked W-2c)? Want to be sure we use the right wage figure.',
+        visibility: 'client-visible',
+        createdAt: addDays(NOW, -6),
+      },
+    ],
+  },
+  // a return-level thread (not tied to any single field or document)
+  {
+    id: 'TH-ENGAGEMENT',
+    returnId: HERO_RETURN_ID,
+    subject: 'Filing timeline for this year',
+    ref: { kind: 'return', id: HERO_RETURN_ID, label: 'Sarah Chen · 1040 · TY2025' },
+    status: 'resolved',
+    nextOwner: 'firm',
+    messages: [
+      {
+        id: 'M-7',
+        authorId: 'u-client',
+        authorName: 'Sarah Chen',
+        authorRole: 'client',
+        body: 'Are we still on track to file before the extension deadline?',
+        visibility: 'client-visible',
+        createdAt: addDays(NOW, -14),
+      },
+      {
+        id: 'M-8',
+        authorId: 'u-preparer',
+        authorName: 'Marcus Reed',
+        authorRole: 'preparer',
+        body: 'Yes — once we have the 1099-B we can finalize. Plenty of runway.',
+        visibility: 'client-visible',
+        createdAt: addDays(NOW, -14),
+      },
+    ],
+  },
+]
+
+/* ---- Business-entity thread (Challenge 02 + 05) -------------------------- */
+export const BUSINESS_THREADS: Thread[] = [
+  {
+    id: 'TH-BH-PAYROLL',
+    returnId: BUSINESS_RETURN_ID,
+    subject: 'Officer compensation — payroll recap needed',
+    ref: { kind: 'return', id: BUSINESS_RETURN_ID, label: 'Blue Harbor Design Co · 1120S' },
+    status: 'open',
+    nextOwner: 'client',
+    messages: [
+      {
+        id: 'M-B1',
+        authorId: 't-ortiz',
+        authorName: 'Lena Ortiz',
+        authorRole: 'preparer',
+        body: 'Officer comp looks low relative to distributions — flagging for reasonable-compensation review once payroll lands.',
+        visibility: 'internal',
+        createdAt: addDays(NOW, -5),
+      },
+      {
+        id: 'M-B2',
+        authorId: 't-ortiz',
+        authorName: 'Lena Ortiz',
+        authorRole: 'preparer',
+        body: 'Hi Daniel — could you send the year-end payroll summary? It’s the last piece before we can draft the 1120S.',
+        visibility: 'client-visible',
+        createdAt: addDays(NOW, -5),
+      },
+    ],
+  },
 ]
 
 /* ---- Outstanding requests (02 / 03) -------------------------------------- */
@@ -518,6 +636,56 @@ export const PERSONAL_REQUESTS: OutstandingRequest[] = [
     dueDate: addDays(NOW, -6),
     createdAt: addDays(NOW, -12),
     daysWaiting: 0,
+  },
+]
+
+/* ---- The business-entity client (Challenge 05: business owners) ----------
+   Same shell, but an 1120S with entity-flavoured obligations, so the client
+   experience isn't only modelled around an individual 1040. */
+export const BUSINESS_RETURN: TaxReturn = {
+  id: BUSINESS_RETURN_ID,
+  clientId: 'c-blueharbor',
+  taxYear: 2025,
+  formType: '1120S',
+  stage: 'documents',
+  preparerId: 't-ortiz',
+  reviewerId: 'u-manager',
+  dueDate: addDays(NOW, 16),
+  progress: 0.3,
+  flags: { blocked: true, overdue: false, lowConfidence: false, conflict: false, aiError: false },
+  blockingReason: 'Waiting on the year-end payroll summary and the shareholder basis schedule.',
+  nextActionOwner: 'client',
+  nextAction: 'Upload year-end payroll summary',
+  daysWaitingOnClient: 6,
+  openReviewFlags: 0,
+  estimatedRefund: -4200,
+  complexityScore: 6,
+}
+
+export const BUSINESS_REQUESTS: OutstandingRequest[] = [
+  {
+    id: 'REQ-BH-PAYROLL',
+    returnId: BUSINESS_RETURN_ID,
+    title: 'Upload year-end payroll summary',
+    detail: 'We need the W-3 / year-end payroll recap to reconcile officer compensation on the 1120S.',
+    cta: 'Upload now',
+    owner: 'client',
+    status: 'open',
+    dueDate: addDays(NOW, 2),
+    createdAt: addDays(NOW, -6),
+    daysWaiting: 6,
+  },
+  {
+    id: 'REQ-BH-BASIS',
+    returnId: BUSINESS_RETURN_ID,
+    title: 'Confirm shareholder basis schedule',
+    detail: 'Confirm each shareholder’s beginning basis so we can compute distributions correctly.',
+    cta: 'Confirm details',
+    owner: 'client',
+    status: 'open',
+    dueDate: addDays(NOW, 10),
+    createdAt: addDays(NOW, -4),
+    daysWaiting: 4,
   },
 ]
 

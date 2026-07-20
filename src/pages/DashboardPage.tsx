@@ -14,6 +14,11 @@ import { Icon, ICONS } from '../components/ui/Icon'
 import { Tooltip } from '../components/ui/Tooltip'
 import { relativeToNow } from '../lib/format'
 
+/* The queue deliberately renders a bounded slice: with 200+ returns on one
+   preparer, an unbounded list is exactly the spreadsheet we're replacing. The
+   ranking runs over ALL of them; only the render is capped. */
+const QUEUE_LIMIT = 40
+
 type Lens = 'preparer' | 'manager'
 type QuickFilter = 'all' | 'overdue' | 'blocked' | 'waiting' | 'flags'
 
@@ -176,7 +181,11 @@ export function DashboardPage() {
                 {filter === 'all' ? 'top priority' : filter}
               </span>
             </div>
-            <span className="text-2xs text-ink-400">{filtered.length} shown</span>
+            <span className="text-2xs text-ink-400">
+              {filtered.length > QUEUE_LIMIT
+                ? `top ${QUEUE_LIMIT} of ${filtered.length} — filter to narrow`
+                : `${filtered.length} shown`}
+            </span>
           </div>
           {loading ? (
             <div className="space-y-2 p-4">
@@ -184,7 +193,7 @@ export function DashboardPage() {
             </div>
           ) : (
             <div className="max-h-[calc(100vh-320px)] overflow-y-auto">
-              {filtered.slice(0, 40).map((r, i) => (
+              {filtered.slice(0, QUEUE_LIMIT).map((r, i) => (
                 <QueueRow key={r.ret.id} ranked={r} rank={i + 1} onOpen={() => openReturn(r.ret)} />
               ))}
               {filtered.length === 0 && (

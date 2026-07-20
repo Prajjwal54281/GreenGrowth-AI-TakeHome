@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { useApp, usePersona } from '../state/AppState'
+import { useApp, usePersona, useEffectiveRole } from '../state/AppState'
 import { useTrackTrail } from '../hooks/useTrackTrail'
-import { clientName, getReturn } from '../data/selectors'
+import { clientName, getReturn, personalReturnFor } from '../data/selectors'
 import { OWNER_LABEL } from '../data/stages'
 import { PageContainer, PageHeader } from '../components/PageHeader'
 import { Card } from '../components/ui/primitives'
@@ -10,10 +10,17 @@ import { Icon, ICONS } from '../components/ui/Icon'
 export function MessagesPage() {
   const { world } = useApp()
   const persona = usePersona()
+  const role = useEffectiveRole()
   useTrackTrail('Messages', 'messages')
-  const isClient = persona.primaryRole === 'client'
+  const isClient = role === 'client'
 
-  const threads = world.threads
+  // A client only ever sees conversations on their OWN return — staff see the
+  // whole firm's. Without this a business client could read another client's
+  // threads. (Challenge 05: permissions, not just navigation.)
+  const own = personalReturnFor(world, persona)
+  const threads = isClient
+    ? world.threads.filter((t) => t.returnId === own?.id)
+    : world.threads
 
   return (
     <PageContainer>

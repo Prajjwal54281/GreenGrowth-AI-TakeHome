@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { useApp, usePersona } from '../state/AppState'
+import { useApp, usePersona, useEffectiveRole } from '../state/AppState'
 import { useTrackTrail } from '../hooks/useTrackTrail'
-import { threadById } from '../data/selectors'
+import { threadById, personalReturnFor } from '../data/selectors'
 import { OWNER_LABEL } from '../data/stages'
 import type { Visibility } from '../data/types'
 import { PageContainer, PageHeader } from '../components/PageHeader'
@@ -26,6 +26,7 @@ export function ThreadPage() {
   const { returnId = '', threadId = '' } = useParams()
   const { world, dispatch } = useApp()
   const persona = usePersona()
+  const role = useEffectiveRole()
   const thread = threadById(world, threadId)
   useTrackTrail(thread ? thread.subject : '', 'thread')
 
@@ -34,13 +35,28 @@ export function ThreadPage() {
 
   if (!thread) return <PageContainer><p className="text-sm text-ink-500">Thread not found.</p></PageContainer>
 
+  // a client may only open threads on their own return, even by direct URL
+  const own = personalReturnFor(world, persona)
+  if (role === 'client' && thread.returnId !== own?.id) {
+    return (
+      <PageContainer>
+        <Card className="p-8 text-center">
+          <p className="text-sm font-semibold text-ink-800">This conversation isn’t available to you</p>
+          <p className="mt-1 text-sm text-ink-500">
+            It belongs to another client’s return. You only see conversations on your own return.
+          </p>
+        </Card>
+      </PageContainer>
+    )
+  }
+
   const send = () => {
     if (!body.trim()) return
     dispatch({ type: 'ADD_MESSAGE', threadId, body: body.trim(), visibility })
     setBody('')
   }
 
-  const isClient = persona.primaryRole === 'client'
+  const isClient = role === 'client'
 
   return (
     <PageContainer>

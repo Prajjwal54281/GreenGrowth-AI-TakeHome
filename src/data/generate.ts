@@ -225,7 +225,10 @@ export function generateBook(): GeneratedBook {
   const rng = makeRng(20250718)
   const clients: Client[] = []
   const returns: TaxReturn[] = []
-  const count = 122
+  // Challenge 07 asks that the dashboard stay usable when someone owns hundreds
+  // of returns — so the book is deliberately large and Marcus is deliberately
+  // overloaded (~200 of these land on him).
+  const count = 520
 
   for (let i = 0; i < count; i++) {
     const isBiz = rng() > 0.72
@@ -243,7 +246,8 @@ export function generateBook(): GeneratedBook {
     })
 
     const stage = pick(rng, STAGES_POOL)
-    const preparer = pick(rng, TEAM)
+    // weight assignment so one preparer genuinely carries a "hundreds" workload
+    const preparer = rng() < 0.38 ? TEAM_BY_ID['u-preparer'] : pick(rng, TEAM)
     // due dates spread from 45 days ago to 100 days out
     const dueOffset = int(rng, -45, 100)
     const dueDate = addDays(NOW, dueOffset)

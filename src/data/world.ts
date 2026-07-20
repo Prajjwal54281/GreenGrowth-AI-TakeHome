@@ -11,6 +11,9 @@ import {
   HERO_REQUESTS,
   PERSONAL_RETURN,
   PERSONAL_REQUESTS,
+  BUSINESS_RETURN,
+  BUSINESS_REQUESTS,
+  BUSINESS_THREADS,
 } from './hero'
 import { generateBook, heroQuestionnaire, heroWarnings } from './generate'
 
@@ -19,11 +22,11 @@ const book = generateBook()
 export const WORLD: SeedWorld = {
   personas: PERSONAS,
   clients: [...HERO_CLIENTS, ...book.clients],
-  returns: [HERO_RETURN, PERSONAL_RETURN, ...book.returns],
+  returns: [HERO_RETURN, PERSONAL_RETURN, BUSINESS_RETURN, ...book.returns],
   documents: HERO_DOCUMENTS,
   fields: HERO_FIELDS,
-  threads: HERO_THREADS,
-  requests: [...HERO_REQUESTS, ...PERSONAL_REQUESTS],
+  threads: [...HERO_THREADS, ...BUSINESS_THREADS],
+  requests: [...HERO_REQUESTS, ...PERSONAL_REQUESTS, ...BUSINESS_REQUESTS],
   questionnaire: heroQuestionnaire(),
   warnings: heroWarnings(),
 }

@@ -26,6 +26,8 @@ export interface Persona {
   color: string
   /** 05 edge case: a firm employee who ALSO has a personal return in the system */
   personalClientId?: string
+  /** a client persona filing for a business entity rather than as an individual */
+  entityContext?: EntityType
   /** short blurb shown in the switcher */
   blurb: string
 }

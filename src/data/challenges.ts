@@ -26,7 +26,7 @@ export const CHALLENGES: ChallengeDef[] = [
     depth: 'flagship',
     route: `/returns/${R}/review`,
     demoNote:
-      'Click the Wages field → its two W-2 Box 1 regions highlight on the right. Click a document region → the fields it feeds highlight on the left.',
+      'Click the Wages field → its two W-2 Box 1 regions highlight on the right. Click a document region → the fields it feeds highlight on the left. Open Capital gain: its sources span TWO pages of the Fidelity statement, and the viewer jumps to the exact page.',
   },
   {
     id: '02',
@@ -35,7 +35,7 @@ export const CHALLENGES: ChallengeDef[] = [
     depth: 'light',
     route: `/returns/${R}/threads/TH-CAPGAIN`,
     demoNote:
-      'Note the unmistakable internal-note vs client-visible styling, and the "who owns the next action" banner. Post a reply as either type.',
+      'Note the unmistakable internal-note vs client-visible styling, and the "who owns the next action" banner. Post a reply as either type. Threads attach to a field, a document (see the Contoso W-2 thread), or the whole return.',
   },
   {
     id: '03',
@@ -60,9 +60,9 @@ export const CHALLENGES: ChallengeDef[] = [
     title: 'Role-Aware Experiences',
     oneLiner: 'One shell, multiple roles, a persona switcher.',
     depth: 'medium',
-    route: '/dashboard',
+    route: '/admin',
     demoNote:
-      'Use the top-bar persona switcher. Try Priya Nair — she is firm staff who also has a personal return, and can flip between Staff mode and My Taxes.',
+      'Six roles, one shell. This page shows the role/permission matrix the shell actually enforces. Use the top-bar persona switcher: Sarah (individual), Daniel (business owner), Marcus (preparer), Diane (manager), Elena (admin), and Priya — firm staff who ALSO has a personal return and can flip between Staff mode and My taxes.',
   },
   {
     id: '06',
@@ -76,11 +76,11 @@ export const CHALLENGES: ChallengeDef[] = [
   {
     id: '07',
     title: 'Actionable Dashboard',
-    oneLiner: '"What should I work on right now?" over 120+ returns.',
+    oneLiner: '"What should I work on right now?" over 500+ returns.',
     depth: 'flagship',
     route: '/dashboard',
     demoNote:
-      'The "Do this next" queue is ranked by real logic. Hover a row to see WHY it ranks. Switch Manager lens (team workload) vs Preparer lens (my queue).',
+      '523 returns in the book; Marcus alone owns ~200. The "Do this next" queue is ranked by real logic — hover a row to see WHY it ranks. Switch Manager lens (team workload) vs Preparer lens (my queue).',
   },
   {
     id: '08',

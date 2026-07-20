@@ -4,7 +4,7 @@
 
 import { ICONS } from '../components/ui/Icon'
 import { HERO_RETURN_ID } from '../data/hero'
-import type { Role } from '../data/types'
+import type { Role, EntityType } from '../data/types'
 
 export interface NavItem {
   label: string
@@ -41,21 +41,55 @@ const STAFF_NAV: NavSection[] = [
 ]
 
 /** Client nav is built per-return so a firm employee in "My taxes" mode links
- *  to THEIR return, not the demo client's (Challenge 05). */
-function clientNav(returnId: string): NavSection[] {
+ *  to THEIR return, not the demo client's (Challenge 05). Business-entity
+ *  clients get entity-flavoured labels off the same structure. */
+function clientNav(returnId: string, entity: EntityType = 'individual'): NavSection[] {
+  const isBiz = entity === 'business'
   return [
     {
       items: [
         { label: 'Home', to: '/home', icon: ICONS.dashboard, challenge: '03' },
-        { label: 'My return', to: `/returns/${returnId}/status`, icon: ICONS.status, challenge: '06' },
-        { label: 'Documents & questions', to: `/returns/${returnId}/items`, icon: ICONS.items, challenge: '09' },
+        {
+          label: isBiz ? 'Business return' : 'My return',
+          to: `/returns/${returnId}/status`,
+          icon: ICONS.status,
+          challenge: '06',
+        },
+        {
+          label: isBiz ? 'Records & questions' : 'Documents & questions',
+          to: `/returns/${returnId}/items`,
+          icon: ICONS.items,
+          challenge: '09',
+        },
         { label: 'Messages', to: '/messages', icon: ICONS.messages, challenge: '02' },
       ],
     },
   ]
 }
 
-export function navForRole(role: Role, clientReturnId: string = R): NavSection[] {
-  if (role === 'client') return clientNav(clientReturnId)
+const ADMIN_NAV: NavSection[] = [
+  {
+    items: [
+      { label: 'Dashboard', to: '/dashboard', icon: ICONS.dashboard, challenge: '07' },
+      { label: 'Returns', to: '/returns', icon: ICONS.returns, matchPrefix: '/returns' },
+      { label: 'Messages', to: '/messages', icon: ICONS.messages, challenge: '02' },
+    ],
+  },
+  {
+    heading: 'Administration',
+    items: [
+      { label: 'Firm & roles', to: '/admin', icon: ICONS.person, challenge: '05' },
+      { label: 'Affordances', to: '/design', icon: ICONS.review, challenge: '08' },
+    ],
+  },
+]
+
+export function navForRole(
+  role: Role,
+  clientReturnId: string = R,
+  entity: EntityType = 'individual',
+): NavSection[] {
+  if (role === 'client') return clientNav(clientReturnId, entity)
+  if (role === 'admin') return ADMIN_NAV
   return STAFF_NAV
 }

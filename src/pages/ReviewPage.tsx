@@ -58,6 +58,7 @@ export function ReviewPage() {
 
   const [selectedId, setSelectedId] = useState<string | undefined>(fieldId)
   const [activeDocId, setActiveDocId] = useState(docs[0]?.id)
+  const [activePage, setActivePage] = useState(1)
   const [highlightRegions, setHighlightRegions] = useState<string[]>([])
   const [pulseFieldIds, setPulseFieldIds] = useState<string[]>([])
   const [editingId, setEditingId] = useState<string | undefined>()
@@ -71,16 +72,21 @@ export function ReviewPage() {
 
   useTrackTrail(ret ? `Review · ${clientName(world, ret.clientId)}` : '', 'review')
 
+  /** jump the viewer to the exact document AND page holding a region */
+  const revealRegion = (regionId: string) => {
+    const doc = docs.find((d) => d.regions.some((r) => r.id === regionId))
+    if (!doc) return
+    setActiveDocId(doc.id)
+    const region = doc.regions.find((r) => r.id === regionId)
+    if (region) setActivePage(region.page)
+  }
+
   const selectField = (f: ReturnField, updateUrl = true) => {
     setSelectedId(f.id)
     setHighlightRegions(f.sourceRegionIds)
     setPulseFieldIds([])
-    // switch the viewer to the doc that holds the first source region
-    const firstRegion = f.sourceRegionIds[0]
-    if (firstRegion) {
-      const doc = docs.find((d) => d.regions.some((r) => r.id === firstRegion))
-      if (doc) setActiveDocId(doc.id)
-    }
+    // switch the viewer to the doc + page that holds the first source region
+    if (f.sourceRegionIds[0]) revealRegion(f.sourceRegionIds[0])
     if (updateUrl) navigate(`/returns/${returnId}/review/${f.id}`, { replace: true })
   }
 
@@ -97,6 +103,7 @@ export function ReviewPage() {
     const fed = fieldsFedByRegion(world, region.id)
     setHighlightRegions([region.id])
     setPulseFieldIds(fed.map((f) => f.id))
+    setActivePage(region.page)
     if (fed[0]) {
       setSelectedId(fed[0].id)
       navigate(`/returns/${returnId}/review/${fed[0].id}`, { replace: true })
@@ -245,7 +252,10 @@ export function ReviewPage() {
                               {f.calcOperands && <CalcBreakdown field={f} />}
                               {f.sourceRegionIds.length > 0 && (
                                 <button
-                                  onClick={() => setHighlightRegions(f.sourceRegionIds)}
+                                  onClick={() => {
+                                    setHighlightRegions(f.sourceRegionIds)
+                                    if (f.sourceRegionIds[0]) revealRegion(f.sourceRegionIds[0])
+                                  }}
                                   className="flex items-center gap-1.5 text-xs font-medium text-brand-700 hover:underline"
                                 >
                                   <Icon path={ICONS.link} size={13} />
@@ -256,8 +266,7 @@ export function ReviewPage() {
                               {f.ai ? (
                                 <AITrustPanel field={f} onJumpToEvidence={(ids) => {
                                   setHighlightRegions(ids)
-                                  const doc = docs.find((d) => d.regions.some((r) => ids.includes(r.id)))
-                                  if (doc) setActiveDocId(doc.id)
+                                  if (ids[0]) revealRegion(ids[0])
                                 }} />
                               ) : (
                                 <div className="rounded-lg border border-ink-200 bg-ink-50 p-2.5 text-xs text-ink-500">
@@ -301,8 +310,35 @@ export function ReviewPage() {
           <div className="bg-ink-100/50 p-5">
             {activeDoc && (
               <>
+                {/* page navigation — traceability resolves to an exact page */}
+                {activeDoc.pageCount > 1 && (
+                  <div className="mx-auto mb-3 flex max-w-[560px] items-center justify-center gap-1.5">
+                    {Array.from({ length: activeDoc.pageCount }, (_, i) => i + 1).map((p) => {
+                      const hasHl = activeDoc.regions.some(
+                        (r) => r.page === p && highlightRegions.includes(r.id),
+                      )
+                      return (
+                        <button
+                          key={p}
+                          onClick={() => setActivePage(p)}
+                          className={[
+                            'rounded-lg border px-2.5 py-1 text-xs font-semibold transition',
+                            p === activePage
+                              ? 'border-brand-400 bg-white text-brand-700'
+                              : 'border-ink-200 text-ink-500 hover:bg-white',
+                            hasHl && p !== activePage ? 'ring-2 ring-brand-300' : '',
+                          ].join(' ')}
+                        >
+                          Page {p}
+                          {hasHl && <span className="ml-1 text-brand-500">•</span>}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
                 <Facsimile
                   doc={activeDoc}
+                  page={activePage}
                   highlightedRegionIds={highlightRegions}
                   onRegionClick={onRegionClick}
                 />

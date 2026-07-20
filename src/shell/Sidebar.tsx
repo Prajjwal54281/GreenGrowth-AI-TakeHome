@@ -9,9 +9,10 @@ export function Sidebar() {
   const role = useEffectiveRole()
   const { world } = useApp()
   const persona = usePersona()
-  // point client nav at the persona's OWN return where they have one
+  // point client nav at the persona's OWN return where they have one, and use
+  // entity-appropriate labels for a business-owner client
   const own = personalReturnFor(world, persona)
-  const sections = navForRole(role, own?.id ?? HERO_RETURN_ID)
+  const sections = navForRole(role, own?.id ?? HERO_RETURN_ID, persona.entityContext ?? 'individual')
   const loc = useLocation()
 
   return (

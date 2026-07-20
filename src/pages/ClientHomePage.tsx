@@ -60,7 +60,17 @@ export function ClientHomePage() {
 
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold text-ink-900">Welcome{mode === 'firstRun' ? '' : ' back'}, {ownerName.split(' ')[0]}</h1>
+          {/* greet the PERSON, not the entity — "Welcome, Blue" would be wrong
+              for a business filer called Blue Harbor Design Co */}
+          <h1 className="text-xl font-bold text-ink-900">
+            Welcome{mode === 'firstRun' ? '' : ' back'},{' '}
+            {(isClientRole ? persona.name : ownerName).split(' ')[0]}
+          </h1>
+          {isClientRole && persona.entityContext === 'business' && (
+            <span className="rounded-md bg-ink-100 px-2 py-0.5 text-2xs font-semibold text-ink-600">
+              {ownerName}
+            </span>
+          )}
           <ChallengeTag ids={['03']} />
         </div>
         <div className="flex items-center rounded-lg border border-ink-200 p-0.5 text-xs font-semibold">
