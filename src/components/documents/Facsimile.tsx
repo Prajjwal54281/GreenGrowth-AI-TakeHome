@@ -171,7 +171,7 @@ export function Facsimile({
         )}
 
         <div className="absolute inset-x-0 bottom-[1.5%] text-center text-[8px] text-ink-300">
-          Styled mockup · not a real tax document · Greenfield prototype
+          Styled mockup · not a real tax document · GreenGrowth prototype
           {doc.pageCount > 1 && <> · page {page} of {doc.pageCount}</>}
         </div>
       </div>

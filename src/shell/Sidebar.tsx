@@ -22,7 +22,7 @@ export function Sidebar() {
           <span className="text-sm font-bold">G</span>
         </div>
         <div className="leading-tight">
-          <div className="text-sm font-bold text-ink-800">Greenfield</div>
+          <div className="text-sm font-bold text-ink-800">GreenGrowth</div>
           <div className="text-2xs text-ink-400">AI Tax Platform</div>
         </div>
       </div>

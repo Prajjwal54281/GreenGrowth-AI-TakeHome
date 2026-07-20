@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
 /* ============================================================================
-   GREENFIELD DESIGN TOKENS
+   GREENGROWTH DESIGN TOKENS
    One design system shared across all ten challenges. Tokens are declared here
    as Tailwind v4 @theme variables so they are usable as utility classes
    (bg-brand-600, text-ink-500, etc.) AND as raw CSS variables where needed.
@@ -12,7 +12,7 @@
    ========================================================================== */
 
 @theme {
-  /* ---- Brand: "Greenfield" — a calm, professional teal-green -------------- */
+  /* ---- Brand: "GreenGrowth" — a calm, professional teal-green ------------- */
   --color-brand-50: #f0fdfa;
   --color-brand-100: #ccfbf1;
   --color-brand-200: #99f6e4;
