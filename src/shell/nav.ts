@@ -40,18 +40,22 @@ const STAFF_NAV: NavSection[] = [
   },
 ]
 
-const CLIENT_NAV: NavSection[] = [
-  {
-    items: [
-      { label: 'Home', to: '/home', icon: ICONS.dashboard, challenge: '03' },
-      { label: 'My return', to: `/returns/${R}/status`, icon: ICONS.status, challenge: '06' },
-      { label: 'Documents & questions', to: `/returns/${R}/items`, icon: ICONS.items, challenge: '09' },
-      { label: 'Messages', to: '/messages', icon: ICONS.messages, challenge: '02' },
-    ],
-  },
-]
+/** Client nav is built per-return so a firm employee in "My taxes" mode links
+ *  to THEIR return, not the demo client's (Challenge 05). */
+function clientNav(returnId: string): NavSection[] {
+  return [
+    {
+      items: [
+        { label: 'Home', to: '/home', icon: ICONS.dashboard, challenge: '03' },
+        { label: 'My return', to: `/returns/${returnId}/status`, icon: ICONS.status, challenge: '06' },
+        { label: 'Documents & questions', to: `/returns/${returnId}/items`, icon: ICONS.items, challenge: '09' },
+        { label: 'Messages', to: '/messages', icon: ICONS.messages, challenge: '02' },
+      ],
+    },
+  ]
+}
 
-export function navForRole(role: Role): NavSection[] {
-  if (role === 'client') return CLIENT_NAV
+export function navForRole(role: Role, clientReturnId: string = R): NavSection[] {
+  if (role === 'client') return clientNav(clientReturnId)
   return STAFF_NAV
 }

@@ -1,6 +1,6 @@
 /* Read helpers over the seeded world. Pure functions — pass the live world in. */
 
-import type { SeedWorld, TaxReturn } from './types'
+import type { SeedWorld, TaxReturn, Persona } from './types'
 
 export function getReturn(w: SeedWorld, id: string): TaxReturn | undefined {
   return w.returns.find((r) => r.id === id)
@@ -48,4 +48,13 @@ export function questionnaireFor(w: SeedWorld, returnId: string) {
 }
 export function warningsFor(w: SeedWorld, returnId: string) {
   return w.warnings.filter((wn) => wn.returnId === returnId)
+}
+
+/** The return the current persona is looking at "as a client" (Challenge 05).
+ *  A client sees their own return; firm staff in "My taxes" mode see THEIR
+ *  personal return, not the demo client's. Staff previewing the client
+ *  experience fall back to the fully-seeded hero return. */
+export function personalReturnFor(w: SeedWorld, persona: Persona): TaxReturn | undefined {
+  if (!persona.personalClientId) return undefined
+  return w.returns.find((r) => r.clientId === persona.personalClientId)
 }

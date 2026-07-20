@@ -433,6 +433,7 @@ export const HERO_REQUESTS: OutstandingRequest[] = [
     returnId: HERO_RETURN_ID,
     title: 'Upload 1099-B from Fidelity',
     detail: 'Needed to confirm cost basis on stock sales before we can finalize capital gains.',
+    cta: 'Upload now',
     owner: 'client',
     status: 'open',
     dueDate: addDays(NOW, -4), // OVERDUE edge case
@@ -446,6 +447,7 @@ export const HERO_REQUESTS: OutstandingRequest[] = [
     returnId: HERO_RETURN_ID,
     title: 'Confirm interest income of $1,240',
     detail: 'The 1099-INT scan is low quality — please confirm the amount.',
+    cta: 'Confirm amount',
     owner: 'client',
     status: 'open',
     dueDate: addDays(NOW, 3),
@@ -463,6 +465,58 @@ export const HERO_REQUESTS: OutstandingRequest[] = [
     status: 'done',
     dueDate: addDays(NOW, -40),
     createdAt: addDays(NOW, -46),
+    daysWaiting: 0,
+  },
+]
+
+/* ---- Priya's personal return (Challenge 05 edge case) --------------------
+   Priya Nair is firm staff who ALSO files her own return. She needs a real
+   personal return of her own — otherwise "My taxes" mode would be showing
+   someone else's data. Deliberately at a different stage than the hero return
+   so the two client experiences don't look identical. */
+export const PERSONAL_RETURN_ID = 'RET-1002'
+
+export const PERSONAL_RETURN: TaxReturn = {
+  id: PERSONAL_RETURN_ID,
+  clientId: 'c-nair',
+  taxYear: 2025,
+  formType: '1040',
+  stage: 'signoff',
+  preparerId: 't-ortiz', // a colleague prepares it — not herself
+  reviewerId: 'u-manager',
+  dueDate: addDays(NOW, 9),
+  progress: 0.9,
+  flags: { blocked: false, overdue: false, lowConfidence: false, conflict: false, aiError: false },
+  nextActionOwner: 'client',
+  nextAction: 'Review and approve your return for filing',
+  daysWaitingOnClient: 2,
+  openReviewFlags: 0,
+  estimatedRefund: 1310,
+  complexityScore: 3,
+}
+
+export const PERSONAL_REQUESTS: OutstandingRequest[] = [
+  {
+    id: 'REQ-PN-APPROVE',
+    returnId: PERSONAL_RETURN_ID,
+    title: 'Approve your return for e-filing',
+    detail: 'Your return is finished and reviewed. Give it a final look and approve it so we can file.',
+    cta: 'Review & approve',
+    owner: 'client',
+    status: 'open',
+    dueDate: addDays(NOW, 9),
+    createdAt: addDays(NOW, -2),
+    daysWaiting: 2,
+  },
+  {
+    id: 'REQ-PN-BANK',
+    returnId: PERSONAL_RETURN_ID,
+    title: 'Confirm your refund deposit account',
+    detail: 'We have an account ending 4417 on file — confirm it is still correct.',
+    owner: 'client',
+    status: 'done',
+    dueDate: addDays(NOW, -6),
+    createdAt: addDays(NOW, -12),
     daysWaiting: 0,
   },
 ]

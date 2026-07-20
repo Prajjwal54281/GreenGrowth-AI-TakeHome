@@ -196,6 +196,8 @@ export interface OutstandingRequest {
   returnId: string
   title: string
   detail: string
+  /** action-appropriate button label on the client home ("Upload now" vs "Review & approve") */
+  cta?: string
   owner: OwnerRole
   status: 'open' | 'done'
   dueDate: string

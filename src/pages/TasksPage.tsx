@@ -1,7 +1,7 @@
-import { useApp, usePersona } from '../state/AppState'
+import { useApp, usePersona, useEffectiveRole } from '../state/AppState'
 import { useTrackTrail } from '../hooks/useTrackTrail'
 import { HERO_RETURN_ID } from '../data/hero'
-import { requestsFor } from '../data/selectors'
+import { requestsFor, personalReturnFor } from '../data/selectors'
 import { OWNER_LABEL } from '../data/stages'
 import { PageContainer, PageHeader } from '../components/PageHeader'
 import { Card, Button } from '../components/ui/primitives'
@@ -13,10 +13,14 @@ import { Link } from 'react-router-dom'
 export function TasksPage() {
   const { world, dispatch } = useApp()
   const persona = usePersona()
+  const role = useEffectiveRole()
   useTrackTrail('Tasks', 'tasks')
-  const isClient = persona.primaryRole === 'client'
+  const isClient = role === 'client'
 
-  const requests = requestsFor(world, HERO_RETURN_ID)
+  // A client (or staff in "My taxes" mode) sees requests on their OWN return.
+  const own = personalReturnFor(world, persona)
+  const scopeId = (isClient && own?.id) || HERO_RETURN_ID
+  const requests = requestsFor(world, scopeId)
   const open = requests.filter((r) => r.status === 'open')
   const done = requests.filter((r) => r.status === 'done')
 
@@ -55,7 +59,7 @@ export function TasksPage() {
                     {r.relatedThreadId && (
                       <>
                         <span>·</span>
-                        <Link to={`/returns/${HERO_RETURN_ID}/threads/${r.relatedThreadId}`} className="font-medium text-brand-600 hover:underline">
+                        <Link to={`/returns/${scopeId}/threads/${r.relatedThreadId}`} className="font-medium text-brand-600 hover:underline">
                           View thread
                         </Link>
                       </>

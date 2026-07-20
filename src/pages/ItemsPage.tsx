@@ -10,6 +10,7 @@ import type { AffordanceState } from '../design/affordances'
 import { PageContainer, PageHeader } from '../components/PageHeader'
 import { Card } from '../components/ui/primitives'
 import { AffordanceValue } from '../components/affordance/AffordanceValue'
+import { NoSeededDetail } from '../components/NoSeededDetail'
 import { Icon, ICONS } from '../components/ui/Icon'
 import { money } from '../lib/format'
 
@@ -95,6 +96,19 @@ export function ItemsPage() {
   })
 
   if (!ret) return <PageContainer><p className="text-sm text-ink-500">Return not found.</p></PageContainer>
+
+  if (items.length === 0) {
+    return (
+      <PageContainer>
+        <PageHeader
+          title="Everything on this return"
+          subtitle={`${clientName(world, ret.clientId)} · ${ret.formType} · TY${ret.taxYear}`}
+          challenges={['09']}
+        />
+        <NoSeededDetail what="items" returnLabel={clientName(world, ret.clientId)} />
+      </PageContainer>
+    )
+  }
 
   return (
     <PageContainer wide>

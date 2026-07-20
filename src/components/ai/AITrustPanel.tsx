@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import type { ReturnField } from '../../data/types'
+import type { ReturnField, DocRegion, TaxDocument } from '../../data/types'
 import { useApp } from '../../state/AppState'
 import { regionById } from '../../data/selectors'
 import { ConfidenceMeter } from '../affordance/ConfidenceMeter'
@@ -36,7 +36,7 @@ export function AITrustPanel({
 
   const evidence = ai.evidenceRegionIds
     .map((id) => regionById(world, id))
-    .filter(Boolean) as { region: NonNullable<ReturnType<typeof regionById>>['region']; doc: any }[]
+    .filter((e): e is { region: DocRegion; doc: TaxDocument } => e !== undefined)
 
   return (
     <div className="rounded-xl border border-aff-ai-border bg-aff-ai-bg p-4">

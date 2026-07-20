@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useApp, usePersona } from '../state/AppState'
 import { useTrackTrail } from '../hooks/useTrackTrail'
-import { clientName } from '../data/selectors'
+import { clientName, getReturn } from '../data/selectors'
 import { OWNER_LABEL } from '../data/stages'
 import { PageContainer, PageHeader } from '../components/PageHeader'
 import { Card } from '../components/ui/primitives'
@@ -26,6 +26,8 @@ export function MessagesPage() {
         {threads.map((t) => {
           const lastVisible = [...t.messages].reverse().find((m) => !(isClient && m.visibility === 'internal'))
           const hasInternal = t.messages.some((m) => m.visibility === 'internal')
+          const threadReturn = getReturn(world, t.returnId)
+          const threadClient = threadReturn ? clientName(world, threadReturn.clientId) : 'Unknown client'
           return (
             <Link
               key={t.id}
@@ -43,7 +45,7 @@ export function MessagesPage() {
                   )}
                 </div>
                 <div className="truncate text-2xs text-ink-500">
-                  {clientName(world, t.returnId === 'RET-1001' ? 'c-chen' : t.returnId)} · {t.ref.label}
+                  {threadClient} · {t.ref.label}
                   {lastVisible && <> — “{lastVisible.body.slice(0, 60)}…”</>}
                 </div>
               </div>

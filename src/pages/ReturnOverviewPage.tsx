@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { useApp } from '../state/AppState'
+import { HERO_RETURN_ID } from '../data/hero'
 import { useTrackTrail } from '../hooks/useTrackTrail'
 import {
   getReturn, getClient, clientName, fieldsFor, docsFor,
@@ -43,6 +44,20 @@ export function ReturnOverviewPage() {
         challenges={['04']}
         right={<StageBadge stage={ret.stage} />}
       />
+
+      {counts.fields === 0 && (
+        <div className="mb-4 flex items-start gap-2 rounded-card border border-ink-200 bg-white px-4 py-3 text-xs text-ink-500">
+          <Icon path={ICONS.warning} size={14} className="mt-0.5 shrink-0 text-ink-400" />
+          <span>
+            This is one of 121 returns generated to exercise the dashboard’s prioritization at
+            realistic volume — it has no seeded field-level detail.{' '}
+            <Link to={`/returns/${HERO_RETURN_ID}/review`} className="font-semibold text-brand-700 hover:underline">
+              Open Sarah Chen’s return
+            </Link>{' '}
+            to see traceability, AI output, and the correction flow.
+          </span>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
         <div className="space-y-4">

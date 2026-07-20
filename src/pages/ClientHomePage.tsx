@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useApp, usePersona } from '../state/AppState'
+import { useApp, usePersona, useEffectiveRole } from '../state/AppState'
 import { useTrackTrail } from '../hooks/useTrackTrail'
 import { HERO_RETURN_ID } from '../data/hero'
-import { requestsFor, questionnaireFor } from '../data/selectors'
+import { requestsFor, questionnaireFor, personalReturnFor, clientName } from '../data/selectors'
 import { PageContainer } from '../components/PageHeader'
 import { Card, Button } from '../components/ui/primitives'
 import { ChallengeTag } from '../components/ChallengeTag'
@@ -17,13 +17,22 @@ import { Icon, ICONS } from '../components/ui/Icon'
 export function ClientHomePage() {
   const { world, dispatch } = useApp()
   const persona = usePersona()
+  const role = useEffectiveRole()
   useTrackTrail('Home', 'home')
   const [mode, setMode] = useState<'firstRun' | 'returning'>('firstRun')
 
-  const ret = getReturn(world, HERO_RETURN_ID)!
-  const openReqs = requestsFor(world, HERO_RETURN_ID).filter((r) => r.owner === 'client' && r.status === 'open')
+  // Whose return is this? A client sees their own; firm staff in "My taxes"
+  // mode see THEIR personal return; staff previewing the client experience
+  // fall back to the fully-seeded demo return. (Challenge 05)
+  const isClientRole = role === 'client'
+  const own = personalReturnFor(world, persona)
+  const ret = (isClientRole && own) || getReturn(world, HERO_RETURN_ID)!
+  const activeId = ret.id
+  const ownerName = clientName(world, ret.clientId)
+
+  const openReqs = requestsFor(world, activeId).filter((r) => r.owner === 'client' && r.status === 'open')
   const primary = [...openReqs].sort((a, b) => a.dueDate.localeCompare(b.dueDate))[0]
-  const questions = questionnaireFor(world, HERO_RETURN_ID)
+  const questions = questionnaireFor(world, activeId)
   const answered = questions.filter((q) => q.answer).length
 
   const steps = [
@@ -38,9 +47,20 @@ export function ClientHomePage() {
   return (
     <PageContainer>
       {/* demo toggle for first-run vs returning */}
+      {!isClientRole && (
+        <div className="mb-3 flex items-start gap-2 rounded-card border border-amber-200 bg-amber-50 px-4 py-2.5 text-xs text-amber-800">
+          <Icon path={ICONS.person} size={14} className="mt-0.5 shrink-0" />
+          <span>
+            You’re signed in as <span className="font-semibold">{persona.name}</span> (firm staff), previewing
+            the <span className="font-semibold">client</span> first-run experience for {ownerName}. Switch to
+            the Sarah Chen persona in the top bar to see it in role.
+          </span>
+        </div>
+      )}
+
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold text-ink-900">Welcome{mode === 'firstRun' ? '' : ' back'}, {persona.name.split(' ')[0]}</h1>
+          <h1 className="text-xl font-bold text-ink-900">Welcome{mode === 'firstRun' ? '' : ' back'}, {ownerName.split(' ')[0]}</h1>
           <ChallengeTag ids={['03']} />
         </div>
         <div className="flex items-center rounded-lg border border-ink-200 p-0.5 text-xs font-semibold">
@@ -58,11 +78,13 @@ export function ClientHomePage() {
             <p className="mt-1 max-w-lg text-sm text-brand-50">{primary.detail}</p>
             <div className="mt-4 flex items-center gap-2">
               <Button variant="secondary" onClick={() => dispatch({ type: 'RESOLVE_REQUEST', requestId: primary.id })}>
-                <Icon path={ICONS.items} size={15} /> Upload now
+                <Icon path={ICONS.items} size={15} /> {primary.cta ?? 'Do this now'}
               </Button>
-              <Link to={`/returns/${HERO_RETURN_ID}/threads/TH-CAPGAIN`} className="text-sm font-medium text-brand-50 hover:text-white">
-                Why do you need this?
-              </Link>
+              {primary.relatedThreadId && (
+                <Link to={`/returns/${activeId}/threads/${primary.relatedThreadId}`} className="text-sm font-medium text-brand-50 hover:text-white">
+                  Why do you need this?
+                </Link>
+              )}
             </div>
           </div>
         </Card>
@@ -98,12 +120,12 @@ export function ClientHomePage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          <Link to={`/returns/${HERO_RETURN_ID}/status`} className="group rounded-card border border-ink-200 bg-white p-4 shadow-card hover:border-brand-300">
+          <Link to={`/returns/${activeId}/status`} className="group rounded-card border border-ink-200 bg-white p-4 shadow-card hover:border-brand-300">
             <Icon path={ICONS.status} size={18} className="text-brand-600" />
             <div className="mt-2 text-sm font-semibold text-ink-800">Return status</div>
             <p className="text-2xs text-ink-500">See where your return is and what’s next.</p>
           </Link>
-          <Link to={`/returns/${HERO_RETURN_ID}/items`} className="group rounded-card border border-ink-200 bg-white p-4 shadow-card hover:border-brand-300">
+          <Link to={`/returns/${activeId}/items`} className="group rounded-card border border-ink-200 bg-white p-4 shadow-card hover:border-brand-300">
             <Icon path={ICONS.items} size={18} className="text-brand-600" />
             <div className="mt-2 text-sm font-semibold text-ink-800">Documents & questions</div>
             <p className="text-2xs text-ink-500">{answered} of {questions.length} questions answered.</p>

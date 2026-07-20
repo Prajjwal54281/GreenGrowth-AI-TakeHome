@@ -17,6 +17,7 @@ import { AffordanceLegend } from '../components/affordance/AffordanceLegend'
 import { ConfidenceMeter } from '../components/affordance/ConfidenceMeter'
 import { AITrustPanel } from '../components/ai/AITrustPanel'
 import { Facsimile } from '../components/documents/Facsimile'
+import { NoSeededDetail } from '../components/NoSeededDetail'
 import { Icon, ICONS } from '../components/ui/Icon'
 import { money } from '../lib/format'
 
@@ -100,6 +101,21 @@ export function ReviewPage() {
     return (
       <PageContainer>
         <p className="text-sm text-ink-500">Return not found.</p>
+      </PageContainer>
+    )
+  }
+
+  // Only the hero return is seeded with field-level detail — say so plainly
+  // instead of rendering an empty review shell.
+  if (fields.length === 0 || docs.length === 0) {
+    return (
+      <PageContainer>
+        <PageHeader
+          title="Return review"
+          subtitle={`${clientName(world, ret.clientId)} · ${ret.formType} · TY${ret.taxYear}`}
+          challenges={['01', '08', '10']}
+        />
+        <NoSeededDetail what="field-level detail" returnLabel={clientName(world, ret.clientId)} />
       </PageContainer>
     )
   }

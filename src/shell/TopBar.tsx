@@ -88,13 +88,19 @@ export function TopBar() {
         {isStaffPersonal && (
           <div className="flex items-center rounded-lg border border-ink-200 p-0.5 text-xs font-semibold">
             <button
-              onClick={() => dispatch({ type: 'SET_CONTEXT_MODE', mode: 'staff' })}
+              onClick={() => {
+                dispatch({ type: 'SET_CONTEXT_MODE', mode: 'staff' })
+                navigate('/dashboard')
+              }}
               className={`rounded-md px-2 py-1 ${contextMode === 'staff' ? 'bg-ink-800 text-white' : 'text-ink-500'}`}
             >
               Staff mode
             </button>
             <button
-              onClick={() => dispatch({ type: 'SET_CONTEXT_MODE', mode: 'personal' })}
+              onClick={() => {
+                dispatch({ type: 'SET_CONTEXT_MODE', mode: 'personal' })
+                navigate('/home')
+              }}
               className={`rounded-md px-2 py-1 ${contextMode === 'personal' ? 'bg-brand-700 text-white' : 'text-ink-500'}`}
             >
               My taxes

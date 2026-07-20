@@ -2,7 +2,7 @@
 
 A clickable frontend prototype for a greenfield tax platform serving **clients and CPAs**. Built as a take-home case study. The frontend is the deliverable — visual design, interaction design, and information architecture. The backend is deliberately fake: seeded data and an in-memory store, no real OCR / AI / auth.
 
-> **Live demo:** _<add Vercel URL here>_
+> **Live demo:** **https://greengrowth-ai-tax.vercel.app/dashboard**
 > **Reviewer tip:** click **Demo Guide** in the top bar — it lists every challenge with a one-click jump to the exact screen/state that demonstrates it, plus the persona switcher.
 
 I was assigned **all ten challenges** but scoped to a weekend, so I did **not** build all ten at equal depth. I picked four flagships that share two screens and built those deeply, took three more to a solid medium depth, and covered the rest at a genuine-but-lighter depth. Depth on a few beats shallow coverage of many. The split is called out honestly below and tagged in the UI (the little `01`…`10` chips).
@@ -49,9 +49,10 @@ I tried to be precise here rather than hand-wavy.
 ### Simulated (faked on purpose)
 - **No OCR / document parsing.** The "documents" are styled HTML mockups of a W-2, 1099-INT, 1099-DIV, and a brokerage statement (`src/components/documents/Facsimile.tsx`). The traceability regions are hand-authored coordinates, positioned so highlights line up with the mock — nothing is being read from an image.
 - **No AI model.** Confidence scores, rationales, "what it did", and suggestions are seeded fake data (`src/data/hero.ts`). The one *wrong* suggestion is hardcoded so the correction flow has something real to do.
-- **No auth.** The persona switcher just swaps a seed record; there's no login, no real permissions enforcement (the internal-vs-client-visible distinction is enforced in the UI layer only).
+- **No auth.** The persona switcher just swaps a seed record; there's no login. Role gating is real in the sense that staff-only routes actually redirect a client context away and internal notes are filtered out for clients — but it's all presentation-layer. A real build would enforce this on a server; nothing here would stop someone with devtools.
 - **No backend / database.** All data lives in memory, seeded on load. There's a `useSimulatedLoad` hook that adds artificial latency so loading states are real, but the data itself isn't fetched over a network.
 - **State is session-only.** A full page reload resets the seeded world (that's expected for an in-memory prototype). Navigate via the app's links to keep your changes.
+- **Only one return has field-level detail.** Sarah Chen's return (`RET-1001`) is the fully-seeded one — documents, traceability regions, AI output, threads, questionnaire. The other 121 returns exist so the dashboard's prioritization is exercised against realistic volume; opening one shows an explicit "no seeded detail" state pointing you back to the real one, rather than a blank screen. That was a deliberate trade: one deep return beats 122 shallow ones for showing the interaction model.
 
 ---
 

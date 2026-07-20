@@ -1,11 +1,17 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { navForRole } from './nav'
-import { useEffectiveRole } from '../state/AppState'
+import { useApp, useEffectiveRole, usePersona } from '../state/AppState'
+import { personalReturnFor } from '../data/selectors'
+import { HERO_RETURN_ID } from '../data/hero'
 import { Icon } from '../components/ui/Icon'
 
 export function Sidebar() {
   const role = useEffectiveRole()
-  const sections = navForRole(role)
+  const { world } = useApp()
+  const persona = usePersona()
+  // point client nav at the persona's OWN return where they have one
+  const own = personalReturnFor(world, persona)
+  const sections = navForRole(role, own?.id ?? HERO_RETURN_ID)
   const loc = useLocation()
 
   return (
